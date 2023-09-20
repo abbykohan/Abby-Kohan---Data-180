@@ -13,7 +13,7 @@ Make sure that you have accepted the hw invitation link, and working with your c
 **Due date:** September 21 beginning of class.
 
 **Reminder:** You can insert R code in your Rmd file as a chunk in the following way:
-```{r}
+```{}
 # Your code goes here
 ```
 Make sure to insert a chunk for each (sub)section of the assignment.
@@ -24,7 +24,13 @@ Go to [datacamp.com](https://datacamp.com) and complete the tutorial "Introducti
 
 ## Task 1
 a) Store the data below in a data frame object named `my_df`.
+```{r}
+person <- c("Alice", "Bob", "Charlie", "Denise", "Erin", "Frank", "Gisele", "Harry")
+preference <- c("Twitter", "Facebook", "Twitter", "Instagram", "Facebook", "Twitter", "Twitter", "Instagram")
+my_df <- data.frame(person, preference)
 
+my_df
+```
 
 |Person | Preference|
 |:------|:----------|
@@ -38,11 +44,17 @@ a) Store the data below in a data frame object named `my_df`.
 | Harry | Instagram |
 
 b) What are the dimensions of `my_df`?
-
+#8 Rows and 2 Columns 
 c) Write R code that counts the total number of users.
+```{r}
+total_users <- nrow(my_df)
 
+total_users
+```
 d) Write R code that counts the total number of users who prefer Twitter.
+```{r}
 
+```
 e) Write R code that returns what Gisele prefers.
 
 ## Task 2

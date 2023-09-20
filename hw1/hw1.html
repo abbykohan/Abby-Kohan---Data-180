@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2023-09-11" />
+<meta name="date" content="2023-09-19" />
 
 <title>HW 1</title>
 
@@ -354,7 +354,7 @@ display: none;
 <h4 class="author">Abby Kohan</h4>
 <a class="author_email" href="mailto:#"><a href="mailto:kohana@dickinson.edu" class="email">kohana@dickinson.edu</a></a>
 </address>
-<h4 class="date">September 11, 2023</h4>
+<h4 class="date">September 19, 2023</h4>
 
 </div>
 
@@ -364,7 +364,7 @@ with your clone repository.</p>
 <p><strong>Due date:</strong> September 21 beginning of class.</p>
 <p><strong>Reminder:</strong> You can insert R code in your Rmd file as
 a chunk in the following way:</p>
-<pre class="r"><code># Your code goes here</code></pre>
+<pre><code># Your code goes here</code></pre>
 <p>Make sure to insert a chunk for each (sub)section of the
 assignment.</p>
 <div id="preliminary-task" class="section level2">
@@ -378,6 +378,20 @@ the tutorial “Introduction to R”.</p>
 <li>Store the data below in a data frame object named
 <code>my_df</code>.</li>
 </ol>
+<pre class="r"><code>person &lt;- c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;, &quot;Denise&quot;, &quot;Erin&quot;, &quot;Frank&quot;, &quot;Gisele&quot;, &quot;Harry&quot;)
+preference &lt;- c(&quot;Twitter&quot;, &quot;Facebook&quot;, &quot;Twitter&quot;, &quot;Instagram&quot;, &quot;Facebook&quot;, &quot;Twitter&quot;, &quot;Twitter&quot;, &quot;Instagram&quot;)
+my_df &lt;- data.frame(person, preference)
+
+my_df</code></pre>
+<pre><code>##    person preference
+## 1   Alice    Twitter
+## 2     Bob   Facebook
+## 3 Charlie    Twitter
+## 4  Denise  Instagram
+## 5    Erin   Facebook
+## 6   Frank    Twitter
+## 7  Gisele    Twitter
+## 8   Harry  Instagram</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -421,8 +435,15 @@ the tutorial “Introduction to R”.</p>
 </tbody>
 </table>
 <ol start="2" style="list-style-type: lower-alpha">
-<li><p>What are the dimensions of <code>my_df</code>?</p></li>
-<li><p>Write R code that counts the total number of users.</p></li>
+<li>What are the dimensions of <code>my_df</code>? #8 Rows and 2
+Columns</li>
+<li>Write R code that counts the total number of users.</li>
+</ol>
+<pre class="r"><code>total_users &lt;- nrow(my_df)
+
+total_users</code></pre>
+<pre><code>## [1] 8</code></pre>
+<ol start="4" style="list-style-type: lower-alpha">
 <li><p>Write R code that counts the total number of users who prefer
 Twitter.</p></li>
 <li><p>Write R code that returns what Gisele prefers.</p></li>
