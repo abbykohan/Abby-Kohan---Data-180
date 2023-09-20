@@ -53,10 +53,16 @@ total_users
 ```
 d) Write R code that counts the total number of users who prefer Twitter.
 ```{r}
+prefer_twitter <- sum(my_df$preference == "Twitter")
 
+prefer_twitter
 ```
 e) Write R code that returns what Gisele prefers.
+```{r}
+prefer_gisele <- my_df$preference [my_df$person == "Gisele"]
 
+prefer_gisele
+```
 ## Task 2
 a) Create a vector named `my_vec` that includes all integers from 1 to 10 (inclusive).
 
