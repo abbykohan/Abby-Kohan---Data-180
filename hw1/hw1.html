@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2023-09-19" />
+<meta name="date" content="2023-09-20" />
 
 <title>HW 1</title>
 
@@ -354,7 +354,7 @@ display: none;
 <h4 class="author">Abby Kohan</h4>
 <a class="author_email" href="mailto:#"><a href="mailto:kohana@dickinson.edu" class="email">kohana@dickinson.edu</a></a>
 </address>
-<h4 class="date">September 19, 2023</h4>
+<h4 class="date">September 20, 2023</h4>
 
 </div>
 
@@ -462,29 +462,65 @@ prefer_gisele</code></pre>
 <div id="task-2" class="section level2">
 <h2>Task 2</h2>
 <ol style="list-style-type: lower-alpha">
-<li><p>Create a vector named <code>my_vec</code> that includes all
-integers from 1 to 10 (inclusive).</p></li>
-<li><p>Replace the second element in <code>my_vec</code> with the number
-<code>99</code>.</p></li>
-<li><p>Write a function called <code>my_func</code> that prints
+<li>Create a vector named <code>my_vec</code> that includes all integers
+from 1 to 10 (inclusive).</li>
+</ol>
+<pre class="r"><code>my_vec &lt;- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+my_vec</code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Replace the second element in <code>my_vec</code> with the number
+<code>99</code>.</li>
+</ol>
+<pre class="r"><code>my_vec[2] &lt;- 99
+
+my_vec</code></pre>
+<pre><code>##  [1]  1 99  3  4  5  6  7  8  9 10</code></pre>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Write a function called <code>my_func</code> that prints
 <code>This element is greater than 5!</code> if an element in
 <code>myvec</code> is greater than 5, and
-<code>This element is NOT greater than 5!</code> otherwise.</p></li>
+<code>This element is NOT greater than 5!</code> otherwise.</li>
 </ol>
+<pre class="r"><code>my_func &lt;- function(my_vec, element) {
+  if (my_vec[element] &gt; 5) {
+    print(&quot;This element is greater than 5!&quot;)
+    }else{ 
+      print(&quot;This element is NOT greater than 5!&quot;)
+  }
+}
+ my_func(my_vec, 1)</code></pre>
+<pre><code>## [1] &quot;This element is NOT greater than 5!&quot;</code></pre>
 </div>
 <div id="task-3" class="section level2">
 <h2>Task 3</h2>
 <ol style="list-style-type: lower-alpha">
-<li><p>Write a function named <code>get_fibonacci</code> that returns
-the n’th value in the <a href="https://www.mathsisfun.com/numbers/fibonacci-sequence.html">fibonacci
+<li>Write a function named <code>get_fibonacci</code> that returns the
+n’th value in the <a href="https://www.mathsisfun.com/numbers/fibonacci-sequence.html">fibonacci
 sequence</a>. For example, <code>get_fibonacci(5)</code> should return
 3; <code>get_fibonacci(7)</code> should return 8 and so on.
 <em><strong>Hint:</strong> It is possible to call the same function from
 inside it. E.g., you can call <code>get_fibonacci()</code> from inside
-<code>get_fibonacci()</code>. Like inception!</em></p></li>
-<li><p>Using your function in part (a), find and return the 19th value
-in the fibonacci sequence.</p></li>
+<code>get_fibonacci()</code>. Like inception!</em></li>
 </ol>
+<pre class="r"><code>get_fibonacci &lt;- function(n) {
+  if (n==1) {
+    return(0)
+  }
+  else if (n==2) {
+    return(1)
+  } else {
+    return(get_fibonacci(n-1) +get_fibonacci(n-2))
+  }
+  
+}</code></pre>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Using your function in part (a), find and return the 19th value in
+the fibonacci sequence.</li>
+</ol>
+<pre class="r"><code>get_fibonacci(19)</code></pre>
+<pre><code>## [1] 2584</code></pre>
 <p><br> You are done! 🏁 Don’t forget to <code>commit</code> and
 <code>push</code> your .Rmd file to your Github clone repository before
 the due date. <br></p>
