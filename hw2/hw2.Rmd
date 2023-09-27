@@ -2,8 +2,8 @@
 title: "HW 2: Visualization, Base R"
 subtitle: "Data 180, Professor Kennedy"
 author: 
-  name: "XXX"
-  email: "XXXX@dickinson.edu"
+  name: "Abby Kohan"
+  email: "kohana@dickinson.edu"
 date: '`r format(Sys.Date(), "%B %d, %Y")`' # no need to change date since this line grabs today's date
 output: 
   html_document
@@ -37,11 +37,16 @@ head(Cars93)
 ## Task 1
 a) Create a Frequency table and Relative Frequency table (latter uses percentages) for the variable `Type`. Make sure to round all digits to 3 digits.
 ```{r}
+freq_table <- table(Cars93$Type)
+freq_table
 
+rel_freq_table <- prop.table(freq_table)
+rel_freq_table 
 ```
 b) Create a frequency bar graph for the variable `Type`. You can have count on the y axis.
 ```{r}
-
+freq_graph <- barplot(freq_table, main = "Frequency Bar Graph for Type", col = "lightgreen", xlab = "Type", ylab = "Count", cex.lab = 1.2, cex.axis = 1.2)
+freq_graph 
 ```
 
 *	Your axes should be labeled and legible
@@ -51,7 +56,7 @@ b) Create a frequency bar graph for the variable `Type`. You can have count on t
 
 c) Create a pie chart of the variable `Type`.
 ```{r}
-
+pie_chart <- pie(table(Cars93$Type), main = "Type", col=c(2,3,4,5,6,7), cex = 1.2)
 ```
 
 * The plot should include a title using the main argument.
@@ -63,7 +68,8 @@ d) What is the mode of the variable `Type`? Comment.
 ## Task 2 
 a) Create a histogram of the variable `Horsepower`.
 ```{r}
-
+hp_hist <- hist(Cars93$Horsepower, col = "Red", xlab = "Horsepower", ylab = "Frequency", main = "Histogram of Horsepower", cex.lab = 1.2, cex.axis = 1.2)
+hp_hist
 ```
 
 *	Your axes should be labeled
@@ -73,7 +79,8 @@ a) Create a histogram of the variable `Horsepower`.
 
 b) Create a second histogram with breaks at 25 HP increments instead of 50.
 ```{r}
-
+hp_hist2 <- hist(Cars93$Horsepower, main = "New Histograom of Horsepower", xlab = "Horsepower", ylab = "Frequency", col = "skyblue", cex.lab = 1.2, cex.axis = 1.2, breaks = 25)
+hp_hist2
 ```
 
 * Use the breaks argument to define the classes
@@ -81,25 +88,29 @@ b) Create a second histogram with breaks at 25 HP increments instead of 50.
 
 c) Which histogram more closely follows or rule of thumb for the suggested number of classes? Explain.
 ```{r}
-
+#The histogram with breaks at 25 HP has more bins, providing a finer-grained view of the data. It can capture smaller variations and details within the distribution.
 ```
 
 
 ## Task 3 
 a) What is the type of variable `Passengers`? (Categorical nominal/ordinal or Numerical discrete/continuous?) What happens if we were to make a histogram for `Passengers`? What is the problem with this graph?
 ```{r}
+#Passengers is nominal and discrete. When making a histogram it could be difficult to visualize the data it masks certain categories such as cars with 1 - 10 passengers.
 
+pass_freq <- table(Cars93$Passengers)
+hist(pass_freq, main = "Histogram of Passengers", xlab = "# of Passengers", ylab = "Frequency", cex.lab = 1.2, cex.axis = 1.2, cex.main = 1.2, col = "yellow")
 ```
 
 b) Correct the problem in part (a) by creating a more appropriate visualization. Make sure to label your axes, place a title, choose a custom color as in the previous graphs. (Bonus: use factor() with levels option to display x axis values with no observations on the plot.)
 ```{r}
-
+barplot(pass_freq, main = "Passenger Barplot", xlab = "# of Passengers", ylab = "Values", cex.lab = 1.2, cex.axis = 1.2, cex.main = 1.2, col = "light yellow")
 ```
 
 ## Task 4 
 a) Make a histogram of the variable `Length` (the default breaks are fine). Other aspects of the plot should be as in part (a) in Task 2.
 ```{r}
-
+length_hist <- hist(Cars93$Length, main = "Length Histogram", xlab = "Length", ylab = "Frequency", cex.lab = 1.2, cex.axis = 1.2, cex.main = 1.2, col ="lightgreen")
+length_hist
 ```
 
 b) What is the shape of the distribution?
@@ -111,5 +122,4 @@ c) Find the mean and median of the variable `Length.` Do these answers meet your
 ```
 
 You are done! 🏁 Don't forget to commit and push your .Rmd file to your Github repository before the due date.
-
 
