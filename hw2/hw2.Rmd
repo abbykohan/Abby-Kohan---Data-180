@@ -95,30 +95,38 @@ c) Which histogram more closely follows or rule of thumb for the suggested numbe
 ## Task 3 
 a) What is the type of variable `Passengers`? (Categorical nominal/ordinal or Numerical discrete/continuous?) What happens if we were to make a histogram for `Passengers`? What is the problem with this graph?
 ```{r}
-#Passengers is nominal and discrete. When making a histogram it could be difficult to visualize the data it masks certain categories such as cars with 1 - 10 passengers.
+#Passengers is nominal and discrete. When making a histogram it could be difficult to visualize the data it masks certain categories such as cars with 1 and 3 that have no passengers meaning there should be no bar at 1 and 3.
 
 pass_freq <- table(Cars93$Passengers)
+pass_freq
 hist(pass_freq, main = "Histogram of Passengers", xlab = "# of Passengers", ylab = "Frequency", cex.lab = 1.2, cex.axis = 1.2, cex.main = 1.2, col = "yellow")
 ```
 
 b) Correct the problem in part (a) by creating a more appropriate visualization. Make sure to label your axes, place a title, choose a custom color as in the previous graphs. (Bonus: use factor() with levels option to display x axis values with no observations on the plot.)
 ```{r}
-barplot(pass_freq, main = "Passenger Barplot", xlab = "# of Passengers", ylab = "Values", cex.lab = 1.2, cex.axis = 1.2, cex.main = 1.2, col = "light yellow")
+passengers <- c(Cars93$Passengers)
+freq_table <- table(factor(passengers, levels = c("1", "2", "3", "4", "5", "6", "7", "8")))
+#colors <- c("red", "blue", "orange")
+barplot(freq_table, main = "Passenger Barplot", xlab = "# of Passengers", ylab = "Frequency", cex.lab = 1.2, cex.axis = 1.2, cex.main = 1.2, col = "light yellow", ylim = c(0, max(freq_table) + 1))
 ```
 
 ## Task 4 
 a) Make a histogram of the variable `Length` (the default breaks are fine). Other aspects of the plot should be as in part (a) in Task 2.
 ```{r}
-length_hist <- hist(Cars93$Length, main = "Length Histogram", xlab = "Length", ylab = "Frequency", cex.lab = 1.2, cex.axis = 1.2, cex.main = 1.2, col ="lightgreen")
+length_freq <- table(Cars93$Length)
+length_hist <- hist(length_freq, main = "Length Histogram", xlab = "Length", ylab = "Frequency", cex.lab = 1.2, cex.axis = 1.2, cex.main = 1.2, col ="lightgreen")
 length_hist
 ```
 
 b) What is the shape of the distribution?
-
+Skewed right
 
 c) Find the mean and median of the variable `Length.` Do these answers meet your expectations from part (b)?
 ```{r}
-
+length_mean <- mean(Cars93$Length)
+length_mean
+length_median <- median(Cars93$Length)
+length_median
 ```
 
 You are done! 🏁 Don't forget to commit and push your .Rmd file to your Github repository before the due date.
