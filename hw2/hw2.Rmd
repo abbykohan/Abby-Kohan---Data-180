@@ -8,6 +8,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`' # no need to change date since this 
 output: 
   html_document
 ---
+16/20
 
 Make sure that you have accepted the hw invitation link, and working with your clone repository.
 
@@ -63,7 +64,7 @@ pie_chart <- pie(table(Cars93$Type), main = "Type", col=c(2,3,4,5,6,7), cex = 1.
 *	The names, labels, and axes sizes (cex parameter) should be set to 1.2
 
 d) What is the mode of the variable `Type`? Comment.
-
+ What is the mode? (-1)
 
 ## Task 2 
 a) Create a histogram of the variable `Horsepower`.
@@ -81,6 +82,8 @@ b) Create a second histogram with breaks at 25 HP increments instead of 50.
 ```{r}
 hp_hist2 <- hist(Cars93$Horsepower, main = "New Histograom of Horsepower", xlab = "Horsepower", ylab = "Frequency", col = "skyblue", cex.lab = 1.2, cex.axis = 1.2, breaks = 25)
 hp_hist2
+
+## 25 Hp increments- each bin should have a width of 25. Not 25 bins. (-2)
 ```
 
 * Use the breaks argument to define the classes
@@ -121,7 +124,7 @@ length_hist
 b) What is the shape of the distribution?
 Skewed right
 
-c) Find the mean and median of the variable `Length.` Do these answers meet your expectations from part (b)?
+c) Find the mean and median of the variable `Length.` Do these answers meet your expectations from part (b)? Do they meet your expectations from part b? (-1)
 ```{r}
 length_mean <- mean(Cars93$Length)
 length_mean
