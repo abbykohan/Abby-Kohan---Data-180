@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2023-08-24" />
+<meta name="date" content="2023-10-23" />
 
 <title>HW 4: Dplyr</title>
 
@@ -351,10 +351,10 @@ display: none;
 
 <h1 class="title toc-ignore">HW 4: Dplyr</h1>
 <h3 class="subtitle">Data 180, Professor Kennedy</h3>
-<h4 class="author">Your Name</h4>
-<a class="author_email" href="mailto:#"><a href="mailto:XXXX@dickinson.edu" class="email">XXXX@dickinson.edu</a></a>
+<h4 class="author">Abby Kohan</h4>
+<a class="author_email" href="mailto:#"><a href="mailto:kohana@dickinson.edu" class="email">kohana@dickinson.edu</a></a>
 </address>
-<h4 class="date">August 24, 2023</h4>
+<h4 class="date">October 23, 2023</h4>
 
 </div>
 
@@ -407,11 +407,857 @@ head(records)</code></pre>
 <p>For the entire data, display the summary statistics (mean, median,
 mode, etc.) using the dplyr function <code>summary()</code> via
 pipe.</p>
+<pre class="r"><code>summary(records)</code></pre>
+<pre><code>##     track               type             shortcut            player         
+##  Length:2334        Length:2334        Length:2334        Length:2334       
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##  system_played          date           time_period             time       
+##  Length:2334        Length:2334        Length:2334        Min.   : 14.59  
+##  Class :character   Class :character   Class :character   1st Qu.: 39.03  
+##  Mode  :character   Mode  :character   Mode  :character   Median : 86.19  
+##                                                           Mean   : 90.62  
+##                                                           3rd Qu.:120.16  
+##                                                           Max.   :375.83  
+##  record_duration 
+##  Min.   :   0.0  
+##  1st Qu.:   6.0  
+##  Median :  51.0  
+##  Mean   : 220.8  
+##  3rd Qu.: 198.8  
+##  Max.   :3659.0</code></pre>
 </div>
 <div id="question-2" class="section level1">
 <h1>Question 2</h1>
 <p>Return the count of cases where a record was broken in more than a
 year (365 days).</p>
+<pre class="r"><code>mk_q1 &lt;- select(filter(records, record_duration &gt; 365), track, type, shortcut, player, system_played, date, time_period, time)
+mk_q1</code></pre>
+<pre><code>##                     track       type shortcut    player system_played
+## 1           Luigi Raceway  Three Lap       No  Zwartjes           PAL
+## 2           Luigi Raceway  Three Lap       No     Lacey           PAL
+## 3           Luigi Raceway  Three Lap       No  Zwartjes           PAL
+## 4           Luigi Raceway  Three Lap       No        MJ           PAL
+## 5           Luigi Raceway  Three Lap       No        MJ           PAL
+## 6           Luigi Raceway  Three Lap       No        MR           PAL
+## 7           Luigi Raceway  Three Lap       No        MR           PAL
+## 8           Luigi Raceway Single Lap       No  Zwartjes           PAL
+## 9           Luigi Raceway Single Lap       No        MJ           PAL
+## 10          Luigi Raceway Single Lap       No        MR           PAL
+## 11          Luigi Raceway Single Lap       No        MR           PAL
+## 12          Luigi Raceway Single Lap       No       VAJ           PAL
+## 13          Luigi Raceway Single Lap       No        MR           PAL
+## 14          Luigi Raceway Single Lap       No        MR           PAL
+## 15          Luigi Raceway  Three Lap      Yes  Zwartjes           PAL
+## 16          Luigi Raceway  Three Lap      Yes     Penev           PAL
+## 17          Luigi Raceway  Three Lap      Yes     Karlo          NTSC
+## 18          Luigi Raceway  Three Lap      Yes       VAJ           PAL
+## 19          Luigi Raceway  Three Lap      Yes  abney317          NTSC
+## 20          Luigi Raceway  Three Lap      Yes  Daniel L           PAL
+## 21          Luigi Raceway Single Lap      Yes  Zwartjes           PAL
+## 22          Luigi Raceway Single Lap      Yes        MJ           PAL
+## 23          Luigi Raceway Single Lap      Yes        MR           PAL
+## 24          Luigi Raceway Single Lap      Yes        MR           PAL
+## 25          Luigi Raceway Single Lap      Yes       VAJ           PAL
+## 26          Luigi Raceway Single Lap      Yes        MR           PAL
+## 27          Luigi Raceway Single Lap      Yes        MR           PAL
+## 28           Moo Moo Farm  Three Lap       No    Mike S          NTSC
+## 29           Moo Moo Farm  Three Lap       No     Ben M           PAL
+## 30           Moo Moo Farm  Three Lap       No        MJ           PAL
+## 31           Moo Moo Farm  Three Lap       No        MJ           PAL
+## 32           Moo Moo Farm  Three Lap       No       TJL           PAL
+## 33           Moo Moo Farm  Three Lap       No        MR           PAL
+## 34           Moo Moo Farm  Three Lap       No        MR           PAL
+## 35           Moo Moo Farm  Three Lap       No        MR           PAL
+## 36           Moo Moo Farm Single Lap       No     Myles          NTSC
+## 37           Moo Moo Farm Single Lap       No     Ben M           PAL
+## 38           Moo Moo Farm Single Lap       No   Habrich          NTSC
+## 39           Moo Moo Farm Single Lap       No     Karlo          NTSC
+## 40           Moo Moo Farm Single Lap       No     Karlo          NTSC
+## 41           Moo Moo Farm Single Lap       No       TJL           PAL
+## 42           Moo Moo Farm Single Lap       No        MR           PAL
+## 43           Moo Moo Farm Single Lap       No  abney317           PAL
+## 44     Koopa Troopa Beach  Three Lap       No    Matt B          NTSC
+## 45     Koopa Troopa Beach  Three Lap       No        MJ           PAL
+## 46     Koopa Troopa Beach  Three Lap       No        MJ           PAL
+## 47     Koopa Troopa Beach  Three Lap       No        MR           PAL
+## 48     Koopa Troopa Beach  Three Lap       No        MR           PAL
+## 49     Koopa Troopa Beach Single Lap       No  Zwartjes           PAL
+## 50     Koopa Troopa Beach Single Lap       No        MJ           PAL
+## 51     Koopa Troopa Beach Single Lap       No       VAJ           PAL
+## 52     Koopa Troopa Beach Single Lap       No        MR           PAL
+## 53     Koopa Troopa Beach Single Lap       No        MR           PAL
+## 54        Kalimari Desert  Three Lap       No  Zwartjes           PAL
+## 55        Kalimari Desert  Three Lap       No        MJ           PAL
+## 56        Kalimari Desert  Three Lap       No        MJ           PAL
+## 57        Kalimari Desert  Three Lap       No        MJ           PAL
+## 58        Kalimari Desert  Three Lap       No       VAJ           PAL
+## 59        Kalimari Desert  Three Lap       No        MR           PAL
+## 60        Kalimari Desert  Three Lap       No        MR           PAL
+## 61        Kalimari Desert  Three Lap       No        MR           PAL
+## 62        Kalimari Desert Single Lap       No     Penev           PAL
+## 63        Kalimari Desert Single Lap       No        MJ           PAL
+## 64        Kalimari Desert Single Lap       No        MJ           PAL
+## 65        Kalimari Desert Single Lap       No        MJ           PAL
+## 66        Kalimari Desert Single Lap       No        MJ           PAL
+## 67        Kalimari Desert Single Lap       No        MR           PAL
+## 68        Kalimari Desert Single Lap       No        MR           PAL
+## 69        Kalimari Desert  Three Lap      Yes     Penev           PAL
+## 70        Kalimari Desert  Three Lap      Yes     Penev           PAL
+## 71        Kalimari Desert  Three Lap      Yes     Karlo          NTSC
+## 72        Kalimari Desert  Three Lap      Yes       VAJ           PAL
+## 73        Kalimari Desert  Three Lap      Yes       VAJ           PAL
+## 74        Kalimari Desert  Three Lap      Yes  abney317           PAL
+## 75        Kalimari Desert  Three Lap      Yes  abney317           PAL
+## 76        Kalimari Desert  Three Lap      Yes  abney317           PAL
+## 77        Kalimari Desert Single Lap      Yes     Penev           PAL
+## 78        Kalimari Desert Single Lap      Yes        MJ           PAL
+## 79        Kalimari Desert Single Lap      Yes        MJ           PAL
+## 80        Kalimari Desert Single Lap      Yes        MJ           PAL
+## 81        Kalimari Desert Single Lap      Yes        MJ           PAL
+## 82        Kalimari Desert Single Lap      Yes        MR           PAL
+## 83        Kalimari Desert Single Lap      Yes        MR           PAL
+## 84        Toad&#39;s Turnpike  Three Lap       No  Zwartjes           PAL
+## 85        Toad&#39;s Turnpike  Three Lap       No        MJ           PAL
+## 86        Toad&#39;s Turnpike  Three Lap       No        MJ           PAL
+## 87        Toad&#39;s Turnpike  Three Lap       No        MJ           PAL
+## 88        Toad&#39;s Turnpike  Three Lap       No        MR           PAL
+## 89        Toad&#39;s Turnpike  Three Lap       No        MR           PAL
+## 90        Toad&#39;s Turnpike  Three Lap       No        MR           PAL
+## 91        Toad&#39;s Turnpike Single Lap       No  Zwartjes           PAL
+## 92        Toad&#39;s Turnpike Single Lap       No        MJ           PAL
+## 93        Toad&#39;s Turnpike Single Lap       No        MJ           PAL
+## 94        Toad&#39;s Turnpike Single Lap       No        MJ           PAL
+## 95        Toad&#39;s Turnpike Single Lap       No        MR           PAL
+## 96        Toad&#39;s Turnpike Single Lap       No        MR           PAL
+## 97        Toad&#39;s Turnpike  Three Lap      Yes     Booth          NTSC
+## 98        Toad&#39;s Turnpike  Three Lap      Yes     Karlo          NTSC
+## 99        Toad&#39;s Turnpike  Three Lap      Yes        MJ           PAL
+## 100       Toad&#39;s Turnpike  Three Lap      Yes     Zoran           PAL
+## 101       Toad&#39;s Turnpike  Three Lap      Yes        MR           PAL
+## 102       Toad&#39;s Turnpike  Three Lap      Yes  abney317           PAL
+## 103       Toad&#39;s Turnpike Single Lap      Yes  Zwartjes           PAL
+## 104       Toad&#39;s Turnpike Single Lap      Yes        MJ           PAL
+## 105       Toad&#39;s Turnpike Single Lap      Yes        MJ           PAL
+## 106       Toad&#39;s Turnpike Single Lap      Yes        MJ           PAL
+## 107       Toad&#39;s Turnpike Single Lap      Yes        MR           PAL
+## 108       Toad&#39;s Turnpike Single Lap      Yes        MR           PAL
+## 109       Frappe Snowland  Three Lap       No   Peter E          NTSC
+## 110       Frappe Snowland  Three Lap       No        MJ           PAL
+## 111       Frappe Snowland  Three Lap       No        MJ           PAL
+## 112       Frappe Snowland  Three Lap       No        MJ           PAL
+## 113       Frappe Snowland  Three Lap       No        MJ           PAL
+## 114       Frappe Snowland  Three Lap       No        MR           PAL
+## 115       Frappe Snowland  Three Lap       No        MR           PAL
+## 116       Frappe Snowland  Three Lap       No        MR           PAL
+## 117       Frappe Snowland Single Lap       No    Mike S          NTSC
+## 118       Frappe Snowland Single Lap       No      Sami           PAL
+## 119       Frappe Snowland Single Lap       No     Lacey           PAL
+## 120       Frappe Snowland Single Lap       No        MJ           PAL
+## 121       Frappe Snowland Single Lap       No       VAJ           PAL
+## 122       Frappe Snowland Single Lap       No        MR           PAL
+## 123       Frappe Snowland Single Lap       No       Dan           PAL
+## 124       Frappe Snowland  Three Lap      Yes     Penev           PAL
+## 125       Frappe Snowland  Three Lap      Yes     Ben M           PAL
+## 126       Frappe Snowland  Three Lap      Yes       LPS          NTSC
+## 127       Frappe Snowland  Three Lap      Yes    Greg I           PAL
+## 128       Frappe Snowland  Three Lap      Yes     Karlo          NTSC
+## 129       Frappe Snowland  Three Lap      Yes     Karlo          NTSC
+## 130       Frappe Snowland  Three Lap      Yes    Greg I           PAL
+## 131       Frappe Snowland  Three Lap      Yes    Greg I           PAL
+## 132       Frappe Snowland  Three Lap      Yes       VAJ           PAL
+## 133       Frappe Snowland  Three Lap      Yes  abney317           PAL
+## 134       Frappe Snowland Single Lap      Yes    Mike S          NTSC
+## 135       Frappe Snowland Single Lap      Yes      Sami           PAL
+## 136       Frappe Snowland Single Lap      Yes     Lacey           PAL
+## 137       Frappe Snowland Single Lap      Yes        MJ           PAL
+## 138       Frappe Snowland Single Lap      Yes       VAJ           PAL
+## 139       Frappe Snowland Single Lap      Yes        MR           PAL
+## 140       Frappe Snowland Single Lap      Yes       Dan           PAL
+## 141        Choco Mountain  Three Lap       No     Penev           PAL
+## 142        Choco Mountain  Three Lap       No    Mike S          NTSC
+## 143        Choco Mountain  Three Lap       No      Troy          NTSC
+## 144        Choco Mountain  Three Lap       No        MJ           PAL
+## 145        Choco Mountain  Three Lap       No        MR           PAL
+## 146        Choco Mountain  Three Lap       No        MR           PAL
+## 147        Choco Mountain  Three Lap       No        MR           PAL
+## 148        Choco Mountain Single Lap       No     Penev           PAL
+## 149        Choco Mountain Single Lap       No      Troy          NTSC
+## 150        Choco Mountain Single Lap       No        MJ           PAL
+## 151        Choco Mountain Single Lap       No        MR           PAL
+## 152        Choco Mountain Single Lap       No        MR           PAL
+## 153        Choco Mountain  Three Lap      Yes      Wonn          NTSC
+## 154        Choco Mountain  Three Lap      Yes    Mike S          NTSC
+## 155        Choco Mountain  Three Lap      Yes     Penev           PAL
+## 156        Choco Mountain  Three Lap      Yes       VAJ           PAL
+## 157        Choco Mountain  Three Lap      Yes  abney317           PAL
+## 158        Choco Mountain  Three Lap      Yes  abney317          NTSC
+## 159        Choco Mountain  Three Lap      Yes  abney317          NTSC
+## 160        Choco Mountain Single Lap      Yes     Penev           PAL
+## 161        Choco Mountain Single Lap      Yes      Troy          NTSC
+## 162        Choco Mountain Single Lap      Yes        MJ           PAL
+## 163        Choco Mountain Single Lap      Yes        MR           PAL
+## 164        Choco Mountain Single Lap      Yes        MR           PAL
+## 165         Mario Raceway  Three Lap       No        MJ           PAL
+## 166         Mario Raceway  Three Lap       No        MJ           PAL
+## 167         Mario Raceway  Three Lap       No   Lucas O           PAL
+## 168         Mario Raceway  Three Lap       No        MJ           PAL
+## 169         Mario Raceway  Three Lap       No        MR           PAL
+## 170         Mario Raceway  Three Lap       No       Dan           PAL
+## 171         Mario Raceway  Three Lap       No        MR           PAL
+## 172         Mario Raceway  Three Lap       No       Dan           PAL
+## 173         Mario Raceway Single Lap       No  Zwartjes           PAL
+## 174         Mario Raceway Single Lap       No        MJ           PAL
+## 175         Mario Raceway Single Lap       No    Luke B          NTSC
+## 176         Mario Raceway Single Lap       No    Luke B          NTSC
+## 177         Mario Raceway Single Lap       No    Luke B          NTSC
+## 178         Mario Raceway Single Lap       No        MR           PAL
+## 179         Mario Raceway Single Lap       No       Dan           PAL
+## 180         Mario Raceway Single Lap       No       Dan           PAL
+## 181         Mario Raceway Single Lap       No       Dan           PAL
+## 182         Mario Raceway Single Lap       No        MR           PAL
+## 183         Mario Raceway  Three Lap      Yes    Mike S          NTSC
+## 184         Mario Raceway  Three Lap      Yes  Steven G          NTSC
+## 185         Mario Raceway  Three Lap      Yes     Karlo          NTSC
+## 186         Mario Raceway  Three Lap      Yes       VAJ           PAL
+## 187         Mario Raceway  Three Lap      Yes       VAJ           PAL
+## 188         Mario Raceway  Three Lap      Yes     Lacey           PAL
+## 189         Mario Raceway  Three Lap      Yes  abney317           PAL
+## 190         Mario Raceway Single Lap      Yes  Zwartjes           PAL
+## 191         Mario Raceway Single Lap      Yes        MJ           PAL
+## 192         Mario Raceway Single Lap      Yes    Luke B          NTSC
+## 193         Mario Raceway Single Lap      Yes    Luke B          NTSC
+## 194         Mario Raceway Single Lap      Yes    Luke B          NTSC
+## 195         Mario Raceway Single Lap      Yes        MR           PAL
+## 196         Mario Raceway Single Lap      Yes       Dan           PAL
+## 197         Mario Raceway Single Lap      Yes       Dan           PAL
+## 198         Mario Raceway Single Lap      Yes       Dan           PAL
+## 199         Mario Raceway Single Lap      Yes        MR           PAL
+## 200         Wario Stadium  Three Lap       No  Zwartjes           PAL
+## 201         Wario Stadium  Three Lap       No      Sami           PAL
+## 202         Wario Stadium  Three Lap       No        MJ           PAL
+## 203         Wario Stadium  Three Lap       No        MJ           PAL
+## 204         Wario Stadium  Three Lap       No        MJ           PAL
+## 205         Wario Stadium  Three Lap       No        MR           PAL
+## 206         Wario Stadium  Three Lap       No        MR           PAL
+## 207         Wario Stadium  Three Lap       No        MR           PAL
+## 208         Wario Stadium  Three Lap       No        MR           PAL
+## 209         Wario Stadium Single Lap       No  Zwartjes           PAL
+## 210         Wario Stadium Single Lap       No      Sami           PAL
+## 211         Wario Stadium Single Lap       No     Lacey           PAL
+## 212         Wario Stadium Single Lap       No        MJ           PAL
+## 213         Wario Stadium Single Lap       No      Troy          NTSC
+## 214         Wario Stadium Single Lap       No     Lacey           PAL
+## 215         Wario Stadium Single Lap       No        MJ           PAL
+## 216         Wario Stadium Single Lap       No        MJ           PAL
+## 217         Wario Stadium Single Lap       No        MR           PAL
+## 218         Wario Stadium Single Lap       No        MR           PAL
+## 219         Wario Stadium Single Lap       No        MR           PAL
+## 220         Wario Stadium  Three Lap      Yes     Raffy           PAL
+## 221         Wario Stadium  Three Lap      Yes   JWhalls          NTSC
+## 222         Wario Stadium  Three Lap      Yes     Myles          NTSC
+## 223         Wario Stadium  Three Lap      Yes     Ben M           PAL
+## 224         Wario Stadium  Three Lap      Yes       VAJ           PAL
+## 225         Wario Stadium  Three Lap      Yes       VAJ           PAL
+## 226         Wario Stadium  Three Lap      Yes       VAJ           PAL
+## 227         Wario Stadium Single Lap      Yes  Zwartjes           PAL
+## 228         Wario Stadium Single Lap      Yes      Sami           PAL
+## 229         Wario Stadium Single Lap      Yes     Lacey           PAL
+## 230         Wario Stadium Single Lap      Yes        MJ           PAL
+## 231         Wario Stadium Single Lap      Yes      Troy          NTSC
+## 232         Wario Stadium Single Lap      Yes     Lacey           PAL
+## 233         Wario Stadium Single Lap      Yes        MJ           PAL
+## 234         Wario Stadium Single Lap      Yes        MJ           PAL
+## 235         Wario Stadium Single Lap      Yes        MR           PAL
+## 236         Wario Stadium Single Lap      Yes        MR           PAL
+## 237         Wario Stadium Single Lap      Yes        MR           PAL
+## 238          Sherbet Land  Three Lap       No     Penev           PAL
+## 239          Sherbet Land  Three Lap       No     Lacey           PAL
+## 240          Sherbet Land  Three Lap       No        MJ           PAL
+## 241          Sherbet Land  Three Lap       No        MJ           PAL
+## 242          Sherbet Land  Three Lap       No        MR           PAL
+## 243          Sherbet Land  Three Lap       No        MR           PAL
+## 244          Sherbet Land  Three Lap       No        MR           PAL
+## 245          Sherbet Land  Three Lap       No        MR           PAL
+## 246          Sherbet Land Single Lap       No  Zwartjes           PAL
+## 247          Sherbet Land Single Lap       No        MJ           PAL
+## 248          Sherbet Land Single Lap       No        MJ           PAL
+## 249          Sherbet Land Single Lap       No        MR           PAL
+## 250          Sherbet Land Single Lap       No        MR           PAL
+## 251          Sherbet Land Single Lap       No       Dan           PAL
+## 252          Sherbet Land Single Lap       No        MR           PAL
+## 253          Sherbet Land Single Lap       No       Dan           PAL
+## 254          Sherbet Land Single Lap      Yes  Zwartjes           PAL
+## 255          Sherbet Land Single Lap      Yes        MJ           PAL
+## 256          Sherbet Land Single Lap      Yes        MJ           PAL
+## 257          Sherbet Land Single Lap      Yes        MR           PAL
+## 258          Sherbet Land Single Lap      Yes        MR           PAL
+## 259          Sherbet Land Single Lap      Yes       Dan           PAL
+## 260          Sherbet Land Single Lap      Yes        MR           PAL
+## 261          Sherbet Land Single Lap      Yes       Dan           PAL
+## 262         Royal Raceway  Three Lap       No  Zwartjes           PAL
+## 263         Royal Raceway  Three Lap       No      Troy          NTSC
+## 264         Royal Raceway  Three Lap       No        MJ           PAL
+## 265         Royal Raceway  Three Lap       No        MR           PAL
+## 266         Royal Raceway  Three Lap       No        MR           PAL
+## 267         Royal Raceway  Three Lap       No        MR           PAL
+## 268         Royal Raceway Single Lap       No  Zwartjes           PAL
+## 269         Royal Raceway Single Lap       No      Sami           PAL
+## 270         Royal Raceway Single Lap       No      Troy          NTSC
+## 271         Royal Raceway Single Lap       No        MJ           PAL
+## 272         Royal Raceway Single Lap       No       VAJ           PAL
+## 273         Royal Raceway Single Lap       No        MR           PAL
+## 274         Royal Raceway Single Lap       No        MR           PAL
+## 275         Royal Raceway  Three Lap      Yes    Greg I          NTSC
+## 276         Royal Raceway  Three Lap      Yes    Greg I           PAL
+## 277         Royal Raceway  Three Lap      Yes     Karlo          NTSC
+## 278         Royal Raceway  Three Lap      Yes    Greg I           PAL
+## 279         Royal Raceway  Three Lap      Yes    Greg I           PAL
+## 280         Royal Raceway  Three Lap      Yes  abney317           PAL
+## 281         Royal Raceway Single Lap      Yes  Zwartjes           PAL
+## 282         Royal Raceway Single Lap      Yes      Sami           PAL
+## 283         Royal Raceway Single Lap      Yes      Troy          NTSC
+## 284         Royal Raceway Single Lap      Yes        MJ           PAL
+## 285         Royal Raceway Single Lap      Yes       VAJ           PAL
+## 286         Royal Raceway Single Lap      Yes        MR           PAL
+## 287         Royal Raceway Single Lap      Yes        MR           PAL
+## 288       Bowser&#39;s Castle  Three Lap       No  Zwartjes           PAL
+## 289       Bowser&#39;s Castle  Three Lap       No      Sami           PAL
+## 290       Bowser&#39;s Castle  Three Lap       No        MJ           PAL
+## 291       Bowser&#39;s Castle  Three Lap       No        MJ           PAL
+## 292       Bowser&#39;s Castle  Three Lap       No        MJ           PAL
+## 293       Bowser&#39;s Castle  Three Lap       No        MJ           PAL
+## 294       Bowser&#39;s Castle  Three Lap       No        MR           PAL
+## 295       Bowser&#39;s Castle  Three Lap       No        MR           PAL
+## 296       Bowser&#39;s Castle  Three Lap       No        MR           PAL
+## 297       Bowser&#39;s Castle Single Lap       No      Sami           PAL
+## 298       Bowser&#39;s Castle Single Lap       No        MJ           PAL
+## 299       Bowser&#39;s Castle Single Lap       No        MJ           PAL
+## 300       Bowser&#39;s Castle Single Lap       No        MJ           PAL
+## 301       Bowser&#39;s Castle Single Lap       No        MR           PAL
+## 302       Bowser&#39;s Castle Single Lap       No        MR           PAL
+## 303 D.K.&#39;s Jungle Parkway  Three Lap       No  Zwartjes           PAL
+## 304 D.K.&#39;s Jungle Parkway  Three Lap       No     Lacey           PAL
+## 305 D.K.&#39;s Jungle Parkway  Three Lap       No     Lacey           PAL
+## 306 D.K.&#39;s Jungle Parkway  Three Lap       No     Lacey           PAL
+## 307 D.K.&#39;s Jungle Parkway  Three Lap       No     Lacey           PAL
+## 308 D.K.&#39;s Jungle Parkway  Three Lap       No        MR           PAL
+## 309 D.K.&#39;s Jungle Parkway  Three Lap       No       Dan           PAL
+## 310 D.K.&#39;s Jungle Parkway Single Lap       No     Penev           PAL
+## 311 D.K.&#39;s Jungle Parkway Single Lap       No    Mike S          NTSC
+## 312 D.K.&#39;s Jungle Parkway Single Lap       No      Sami           PAL
+## 313 D.K.&#39;s Jungle Parkway Single Lap       No     Lacey           PAL
+## 314 D.K.&#39;s Jungle Parkway Single Lap       No     Jamie          NTSC
+## 315 D.K.&#39;s Jungle Parkway Single Lap       No     Lacey           PAL
+## 316 D.K.&#39;s Jungle Parkway Single Lap       No        MJ           PAL
+## 317 D.K.&#39;s Jungle Parkway Single Lap       No     Jamie          NTSC
+## 318 D.K.&#39;s Jungle Parkway Single Lap       No        MR           PAL
+## 319 D.K.&#39;s Jungle Parkway Single Lap       No     Zoran           PAL
+## 320 D.K.&#39;s Jungle Parkway  Three Lap      Yes  Jonathan          NTSC
+## 321 D.K.&#39;s Jungle Parkway  Three Lap      Yes   JWhalls          NTSC
+## 322 D.K.&#39;s Jungle Parkway  Three Lap      Yes     Ben M           PAL
+## 323 D.K.&#39;s Jungle Parkway  Three Lap      Yes    Greg I           PAL
+## 324 D.K.&#39;s Jungle Parkway  Three Lap      Yes       VAJ           PAL
+## 325 D.K.&#39;s Jungle Parkway  Three Lap      Yes       VAJ           PAL
+## 326 D.K.&#39;s Jungle Parkway  Three Lap      Yes       VAJ           PAL
+## 327 D.K.&#39;s Jungle Parkway  Three Lap      Yes  abney317           PAL
+## 328 D.K.&#39;s Jungle Parkway Single Lap      Yes     Penev           PAL
+## 329 D.K.&#39;s Jungle Parkway Single Lap      Yes    Mike S          NTSC
+## 330 D.K.&#39;s Jungle Parkway Single Lap      Yes      Sami           PAL
+## 331 D.K.&#39;s Jungle Parkway Single Lap      Yes     Lacey           PAL
+## 332 D.K.&#39;s Jungle Parkway Single Lap      Yes     Jamie          NTSC
+## 333 D.K.&#39;s Jungle Parkway Single Lap      Yes     Lacey           PAL
+## 334 D.K.&#39;s Jungle Parkway Single Lap      Yes        MJ           PAL
+## 335 D.K.&#39;s Jungle Parkway Single Lap      Yes     Jamie          NTSC
+## 336 D.K.&#39;s Jungle Parkway Single Lap      Yes        MR           PAL
+## 337 D.K.&#39;s Jungle Parkway Single Lap      Yes     Zoran           PAL
+## 338          Yoshi Valley  Three Lap       No      Sami           PAL
+## 339          Yoshi Valley  Three Lap       No      Sami           PAL
+## 340          Yoshi Valley  Three Lap       No     Karlo          NTSC
+## 341          Yoshi Valley  Three Lap       No        MJ           PAL
+## 342          Yoshi Valley  Three Lap       No        MR           PAL
+## 343          Yoshi Valley  Three Lap       No        MR           PAL
+## 344          Yoshi Valley Single Lap       No    Mike S          NTSC
+## 345          Yoshi Valley Single Lap       No        MJ           PAL
+## 346          Yoshi Valley Single Lap       No Michael F          NTSC
+## 347          Yoshi Valley Single Lap       No        MR           PAL
+## 348          Yoshi Valley Single Lap       No        MR           PAL
+## 349          Yoshi Valley  Three Lap      Yes     Booth          NTSC
+## 350          Yoshi Valley  Three Lap      Yes    Greg I          NTSC
+## 351          Yoshi Valley  Three Lap      Yes     Myles          NTSC
+## 352          Yoshi Valley  Three Lap      Yes     Myles          NTSC
+## 353          Yoshi Valley  Three Lap      Yes    Alex G           PAL
+## 354          Yoshi Valley  Three Lap      Yes       VAJ           PAL
+## 355          Yoshi Valley  Three Lap      Yes    Greg I           PAL
+## 356          Yoshi Valley  Three Lap      Yes  abney317          NTSC
+## 357          Yoshi Valley Single Lap      Yes    Mike S          NTSC
+## 358          Yoshi Valley Single Lap      Yes        MJ           PAL
+## 359          Yoshi Valley Single Lap      Yes Michael F          NTSC
+## 360          Yoshi Valley Single Lap      Yes        MR           PAL
+## 361          Yoshi Valley Single Lap      Yes        MR           PAL
+## 362     Banshee Boardwalk  Three Lap       No  Zwartjes           PAL
+## 363     Banshee Boardwalk  Three Lap       No        MJ           PAL
+## 364     Banshee Boardwalk  Three Lap       No   Marcelo          NTSC
+## 365     Banshee Boardwalk  Three Lap       No        MJ           PAL
+## 366     Banshee Boardwalk  Three Lap       No        MJ           PAL
+## 367     Banshee Boardwalk  Three Lap       No        MR           PAL
+## 368     Banshee Boardwalk  Three Lap       No        MR           PAL
+## 369     Banshee Boardwalk Single Lap       No  Zwartjes           PAL
+## 370     Banshee Boardwalk Single Lap       No      Sami           PAL
+## 371     Banshee Boardwalk Single Lap       No        MJ           PAL
+## 372     Banshee Boardwalk Single Lap       No        MJ           PAL
+## 373     Banshee Boardwalk Single Lap       No     Zoran           PAL
+## 374     Banshee Boardwalk Single Lap       No     Zoran           PAL
+## 375     Banshee Boardwalk Single Lap       No        MR           PAL
+## 376     Banshee Boardwalk Single Lap       No        MR           PAL
+## 377          Rainbow Road  Three Lap       No  Zwartjes           PAL
+## 378          Rainbow Road  Three Lap       No      Sami           PAL
+## 379          Rainbow Road  Three Lap       No      Sami           PAL
+## 380          Rainbow Road  Three Lap       No        MJ           PAL
+## 381          Rainbow Road  Three Lap       No        MR           PAL
+## 382          Rainbow Road  Three Lap       No        MR           PAL
+## 383          Rainbow Road  Three Lap       No        MR           PAL
+## 384          Rainbow Road  Three Lap       No  abney317           PAL
+## 385          Rainbow Road Single Lap       No  Zwartjes           PAL
+## 386          Rainbow Road Single Lap       No      Sami           PAL
+## 387          Rainbow Road Single Lap       No      Sami           PAL
+## 388          Rainbow Road Single Lap       No     Tim E          NTSC
+## 389          Rainbow Road Single Lap       No        MJ           PAL
+## 390          Rainbow Road Single Lap       No        MJ           PAL
+## 391          Rainbow Road Single Lap       No        MR           PAL
+## 392          Rainbow Road Single Lap       No        MR           PAL
+## 393          Rainbow Road Single Lap       No        MR           PAL
+## 394          Rainbow Road Single Lap       No        MR           PAL
+## 395          Rainbow Road  Three Lap      Yes     Penev           PAL
+## 396          Rainbow Road  Three Lap      Yes     Penev           PAL
+## 397          Rainbow Road  Three Lap      Yes     Karlo          NTSC
+## 398          Rainbow Road  Three Lap      Yes       VAJ           PAL
+## 399          Rainbow Road  Three Lap      Yes  abney317           PAL
+## 400          Rainbow Road  Three Lap      Yes  abney317           PAL
+## 401          Rainbow Road Single Lap      Yes  Zwartjes           PAL
+## 402          Rainbow Road Single Lap      Yes      Sami           PAL
+## 403          Rainbow Road Single Lap      Yes      Sami           PAL
+## 404          Rainbow Road Single Lap      Yes     Tim E          NTSC
+## 405          Rainbow Road Single Lap      Yes        MJ           PAL
+## 406          Rainbow Road Single Lap      Yes        MJ           PAL
+## 407          Rainbow Road Single Lap      Yes        MR           PAL
+## 408          Rainbow Road Single Lap      Yes        MR           PAL
+## 409          Rainbow Road Single Lap      Yes        MR           PAL
+## 410          Rainbow Road Single Lap      Yes        MR           PAL
+##           date time_period   time
+## 1   1999-10-30   1M 58.65S 118.65
+## 2   2002-03-20   1M 58.64S 118.64
+## 3   2003-05-27   1M 58.14S 118.14
+## 4   2005-07-10   1M 58.12S 118.12
+## 5   2011-12-26   1M 58.06S 118.06
+## 6   2014-11-04   1M 57.99S 117.99
+## 7   2017-07-12   1M 57.98S 117.98
+## 8   2000-02-22      37.74S  37.74
+## 9   2003-10-05      37.69S  37.69
+## 10  2011-07-17      37.66S  37.66
+## 11  2013-12-28      37.62S  37.62
+## 12  2017-01-03      37.61S  37.61
+## 13  2018-01-04      37.61S  37.61
+## 14  2019-12-30      37.59S  37.59
+## 15  1999-11-02   1M 34.74S  94.74
+## 16  2000-11-19   1M 34.39S  94.39
+## 17  2005-09-19   1M 33.22S  93.22
+## 18  2012-08-31   1M 31.62S  91.62
+## 19  2016-03-24   1M 27.45S  87.45
+## 20  2017-04-25    1M 26.7S  86.70
+## 21  2000-02-22      37.74S  37.74
+## 22  2003-10-05      37.69S  37.69
+## 23  2011-07-17      37.66S  37.66
+## 24  2013-12-28      37.62S  37.62
+## 25  2017-01-03      37.61S  37.61
+## 26  2018-01-04      37.61S  37.61
+## 27  2019-12-30      37.59S  37.59
+## 28  2000-10-17   1M 28.32S  88.32
+## 29  2003-04-28   1M 27.66S  87.66
+## 30  2005-03-14   1M 27.35S  87.35
+## 31  2007-03-07   1M 27.06S  87.06
+## 32  2010-11-01   1M 26.44S  86.44
+## 33  2013-12-19   1M 26.36S  86.36
+## 34  2015-10-12   1M 26.14S  86.14
+## 35  2020-02-18   1M 25.93S  85.93
+## 36  2000-10-06      28.33S  28.33
+## 37  2003-04-02      28.25S  28.25
+## 38  2004-06-18      28.14S  28.14
+## 39  2006-01-20      28.14S  28.14
+## 40  2007-03-03      27.99S  27.99
+## 41  2013-03-27      27.82S  27.82
+## 42  2017-11-27      27.82S  27.82
+## 43  2018-12-29       27.8S  27.80
+## 44  2000-10-08   1M 36.14S  96.14
+## 45  2005-02-08   1M 35.91S  95.91
+## 46  2012-01-22   1M 35.67S  95.67
+## 47  2013-09-15   1M 35.65S  95.65
+## 48  2018-03-07   1M 35.43S  95.43
+## 49  2000-03-07      31.13S  31.13
+## 50  2004-09-06      30.92S  30.92
+## 51  2013-12-08      30.88S  30.88
+## 52  2013-12-08      30.88S  30.88
+## 53  2015-12-06      30.84S  30.84
+## 54  2000-02-13    2M 6.13S 126.13
+## 55  2004-06-18    2M 5.56S 125.56
+## 56  2008-02-25    2M 5.33S 125.33
+## 57  2012-01-24    2M 5.17S 125.17
+## 58  2012-08-14    2M 5.17S 125.17
+## 59  2014-01-23    2M 4.85S 124.85
+## 60  2016-10-15    2M 4.23S 124.23
+## 61  2018-04-20    2M 3.94S 123.94
+## 62  2001-02-11      39.43S  39.43
+## 63  2003-05-08       39.4S  39.40
+## 64  2004-09-05      39.23S  39.23
+## 65  2009-01-27      39.18S  39.18
+## 66  2011-05-03      39.14S  39.14
+## 67  2013-12-05      39.04S  39.04
+## 68  2018-07-23      39.01S  39.01
+## 69  1999-08-07    2M 8.01S 128.01
+## 70  2000-11-18    2M 5.91S 125.91
+## 71  2005-11-14    2M 5.16S 125.16
+## 72  2010-12-17    2M 4.56S 124.56
+## 73  2012-07-27    2M 3.73S 123.73
+## 74  2016-04-09    2M 2.82S 122.82
+## 75  2017-12-13    2M 2.46S 122.46
+## 76  2020-01-20    2M 1.92S 121.92
+## 77  2001-02-11      39.43S  39.43
+## 78  2003-05-08       39.4S  39.40
+## 79  2004-09-05      39.23S  39.23
+## 80  2009-01-27      39.18S  39.18
+## 81  2011-05-03      39.14S  39.14
+## 82  2013-12-05      39.04S  39.04
+## 83  2018-07-23      39.01S  39.01
+## 84  2000-03-03   2M 59.85S 179.85
+## 85  2003-05-05   2M 59.63S 179.63
+## 86  2004-10-30    2M 59.1S 179.10
+## 87  2010-01-09   2M 58.92S 178.92
+## 88  2013-02-14   2M 58.79S 178.79
+## 89  2014-07-29   2M 58.63S 178.63
+## 90  2017-12-28   2M 58.32S 178.32
+## 91  2000-03-07      59.26S  59.26
+## 92  2004-12-04      59.03S  59.03
+## 93  2010-01-09         59S  59.00
+## 94  2012-09-16      58.85S  58.85
+## 95  2013-12-09      58.83S  58.83
+## 96  2019-08-07      58.76S  58.76
+## 97  2001-07-05   1M 50.69S 110.69
+## 98  2006-03-17   1M 49.68S 109.68
+## 99  2009-10-16   1M 49.37S 109.37
+## 100 2013-07-30   1M 49.19S 109.19
+## 101 2014-09-14   1M 49.14S 109.14
+## 102 2016-03-09   1M 49.07S 109.07
+## 103 2000-03-07      59.26S  59.26
+## 104 2004-12-04      59.03S  59.03
+## 105 2010-01-09         59S  59.00
+## 106 2012-09-16      58.85S  58.85
+## 107 2013-12-09      58.83S  58.83
+## 108 2019-08-07      58.76S  58.76
+## 109 1999-12-22     2M 1.8S 121.80
+## 110 2003-07-10    2M 1.23S 121.23
+## 111 2006-01-15    2M 1.02S 121.02
+## 112 2008-03-14    2M 0.98S 120.98
+## 113 2011-12-16    2M 0.78S 120.78
+## 114 2013-02-06     2M 0.7S 120.70
+## 115 2016-07-13    2M 0.06S 120.06
+## 116 2017-12-23   1M 59.95S 119.95
+## 117 2000-02-23      38.95S  38.95
+## 118 2003-06-26      38.85S  38.85
+## 119 2003-06-26      38.85S  38.85
+## 120 2006-02-02      38.68S  38.68
+## 121 2012-07-23      38.61S  38.61
+## 122 2015-10-19      38.29S  38.29
+## 123 2019-12-25      38.27S  38.27
+## 124 1999-04-25      26.36S  26.36
+## 125 2001-07-15      26.36S  26.36
+## 126 2003-02-22      26.12S  26.12
+## 127 2005-03-27      26.12S  26.12
+## 128 2006-06-26      26.09S  26.09
+## 129 2008-04-14      25.98S  25.98
+## 130 2011-05-02       25.9S  25.90
+## 131 2012-07-19      25.86S  25.86
+## 132 2012-11-23      25.86S  25.86
+## 133 2018-10-13      25.76S  25.76
+## 134 2000-02-23      38.95S  38.95
+## 135 2003-06-26      38.85S  38.85
+## 136 2003-06-26      38.85S  38.85
+## 137 2006-02-02      38.68S  38.68
+## 138 2012-07-23      38.61S  38.61
+## 139 2015-10-19      38.29S  38.29
+## 140 2019-12-25      38.27S  38.27
+## 141 1999-06-14   1M 57.36S 117.36
+## 142 2000-11-26   1M 57.28S 117.28
+## 143 2005-03-19   1M 56.25S 116.25
+## 144 2012-04-08   1M 56.15S 116.15
+## 145 2013-12-01   1M 56.14S 116.14
+## 146 2016-07-21   1M 56.08S 116.08
+## 147 2019-03-20      1M 56S 116.00
+## 148 1999-06-24      38.29S  38.29
+## 149 2005-03-04      38.19S  38.19
+## 150 2012-04-05      38.14S  38.14
+## 151 2013-11-18      38.12S  38.12
+## 152 2018-01-30      38.08S  38.08
+## 153 1997-08-30   1M 27.14S  87.14
+## 154 2000-05-01   1M 21.23S  81.23
+## 155 2002-09-03   1M 20.94S  80.94
+## 156 2007-05-08    1M 12.5S  72.50
+## 157 2015-01-16      53.18S  53.18
+## 158 2016-03-22      52.57S  52.57
+## 159 2017-10-29       19.7S  19.70
+## 160 1999-06-24      38.29S  38.29
+## 161 2005-03-04      38.19S  38.19
+## 162 2012-04-05      38.14S  38.14
+## 163 2013-11-18      38.12S  38.12
+## 164 2018-01-30      38.08S  38.08
+## 165 2003-07-07   1M 28.44S  88.44
+## 166 2006-01-22   1M 28.22S  88.22
+## 167 2007-08-26   1M 28.02S  88.02
+## 168 2011-08-16   1M 27.97S  87.97
+## 169 2014-01-13   1M 27.96S  87.96
+## 170 2016-11-11   1M 27.74S  87.74
+## 171 2018-03-07   1M 27.64S  87.64
+## 172 2019-02-10   1M 27.64S  87.64
+## 173 2000-02-29      27.91S  27.91
+## 174 2003-07-03      27.81S  27.81
+## 175 2004-07-31      27.79S  27.79
+## 176 2006-02-15      27.78S  27.78
+## 177 2008-03-12      27.72S  27.72
+## 178 2013-11-11      27.72S  27.72
+## 179 2015-03-18      27.68S  27.68
+## 180 2016-11-05      27.66S  27.66
+## 181 2018-08-15      27.63S  27.63
+## 182 2018-11-22      27.63S  27.63
+## 183 1999-07-27       1M 2S  62.00
+## 184 2003-12-17    1M 1.71S  61.71
+## 185 2005-08-28    1M 1.64S  61.64
+## 186 2006-09-09     1M 1.5S  61.50
+## 187 2010-02-04    1M 1.13S  61.13
+## 188 2014-07-31    1M 0.81S  60.81
+## 189 2017-11-10    1M 0.65S  60.65
+## 190 2000-02-29      27.91S  27.91
+## 191 2003-07-03      27.81S  27.81
+## 192 2004-07-31      27.79S  27.79
+## 193 2006-02-15      27.78S  27.78
+## 194 2008-03-12      27.72S  27.72
+## 195 2013-11-11      27.72S  27.72
+## 196 2015-03-18      27.68S  27.68
+## 197 2016-11-05      27.66S  27.66
+## 198 2018-08-15      27.63S  27.63
+## 199 2018-11-22      27.63S  27.63
+## 200 1999-11-12   4M 25.72S 265.72
+## 201 2002-02-10   4M 24.52S 264.52
+## 202 2005-04-14   4M 23.17S 263.17
+## 203 2009-07-05      4M 23S 263.00
+## 204 2011-02-02   4M 21.83S 261.83
+## 205 2013-03-01    4M 21.7S 261.70
+## 206 2014-11-27   4M 21.54S 261.54
+## 207 2017-12-15   4M 20.42S 260.42
+## 208 2019-10-11   4M 20.01S 260.01
+## 209 1999-11-12   1M 27.53S  87.53
+## 210 2002-02-14    1M 27.4S  87.40
+## 211 2005-02-14   1M 26.97S  86.97
+## 212 2005-02-17   1M 26.97S  86.97
+## 213 2006-09-26   1M 26.91S  86.91
+## 214 2009-07-06   1M 26.87S  86.87
+## 215 2009-07-19   1M 26.87S  86.87
+## 216 2011-02-03   1M 26.43S  86.43
+## 217 2013-03-03   1M 26.39S  86.39
+## 218 2017-12-17   1M 25.96S  85.96
+## 219 2019-10-12   1M 25.87S  85.87
+## 220 1998-01-14      19.52S  19.52
+## 221 1999-03-02      17.88S  17.88
+## 222 2000-06-20      16.77S  16.77
+## 223 2002-08-22      15.48S  15.48
+## 224 2006-05-25      15.12S  15.12
+## 225 2010-12-28      14.87S  14.87
+## 226 2015-01-26       14.7S  14.70
+## 227 1999-11-12   1M 27.53S  87.53
+## 228 2002-02-14    1M 27.4S  87.40
+## 229 2005-02-14   1M 26.97S  86.97
+## 230 2005-02-17   1M 26.97S  86.97
+## 231 2006-09-26   1M 26.91S  86.91
+## 232 2009-07-06   1M 26.87S  86.87
+## 233 2009-07-19   1M 26.87S  86.87
+## 234 2011-02-03   1M 26.43S  86.43
+## 235 2013-03-03   1M 26.39S  86.39
+## 236 2017-12-17   1M 25.96S  85.96
+## 237 2019-10-12   1M 25.87S  85.87
+## 238 2000-08-31   1M 57.03S 117.03
+## 239 2002-06-17   1M 56.98S 116.98
+## 240 2003-10-30   1M 56.63S 116.63
+## 241 2006-01-22   1M 56.15S 116.15
+## 242 2013-02-06   1M 55.86S 115.86
+## 243 2015-06-18   1M 55.65S 115.65
+## 244 2017-07-09   1M 55.43S 115.43
+## 245 2018-12-05   1M 55.31S 115.31
+## 246 2000-02-13      38.17S  38.17
+## 247 2003-06-22      38.09S  38.09
+## 248 2006-01-18      38.04S  38.04
+## 249 2012-08-27       37.9S  37.90
+## 250 2013-12-31      37.88S  37.88
+## 251 2016-07-09      37.88S  37.88
+## 252 2017-10-28      37.82S  37.82
+## 253 2019-08-05      37.75S  37.75
+## 254 2000-02-13      38.17S  38.17
+## 255 2003-06-22      38.09S  38.09
+## 256 2006-01-18      38.04S  38.04
+## 257 2012-08-27       37.9S  37.90
+## 258 2013-12-31      37.88S  37.88
+## 259 2016-07-09      37.88S  37.88
+## 260 2017-10-28      37.82S  37.82
+## 261 2019-08-05      37.75S  37.75
+## 262 2000-03-07   2M 52.98S 172.98
+## 263 2004-09-03   2M 52.29S 172.29
+## 264 2008-03-03   2M 52.29S 172.29
+## 265 2014-08-01   2M 51.75S 171.75
+## 266 2016-11-27   2M 51.66S 171.66
+## 267 2019-01-09   2M 51.64S 171.64
+## 268 2000-03-07      56.48S  56.48
+## 269 2002-03-07      56.45S  56.45
+## 270 2003-09-18      55.82S  55.82
+## 271 2008-03-05       55.8S  55.80
+## 272 2012-08-21      55.75S  55.75
+## 273 2014-08-02      55.63S  55.63
+## 274 2019-01-09      55.55S  55.55
+## 275 1999-06-21    2M 2.75S 122.75
+## 276 2005-03-22    2M 1.73S 121.73
+## 277 2006-04-04    2M 1.05S 121.05
+## 278 2008-07-13    2M 0.01S 120.01
+## 279 2015-04-28   1M 59.63S 119.63
+## 280 2016-07-31   1M 59.49S 119.49
+## 281 2000-03-07      56.48S  56.48
+## 282 2002-03-07      56.45S  56.45
+## 283 2003-09-18      55.82S  55.82
+## 284 2008-03-05       55.8S  55.80
+## 285 2012-08-21      55.75S  55.75
+## 286 2014-08-02      55.63S  55.63
+## 287 2019-01-09      55.55S  55.55
+## 288 2000-03-14   2M 13.95S 133.95
+## 289 2002-03-08   2M 13.87S 133.87
+## 290 2003-06-25   2M 13.53S 133.53
+## 291 2005-02-14   2M 13.07S 133.07
+## 292 2008-12-12    2M 12.9S 132.90
+## 293 2012-01-26   2M 12.73S 132.73
+## 294 2013-06-23   2M 12.68S 132.68
+## 295 2016-01-29    2M 12.4S 132.40
+## 296 2018-07-24   2M 12.28S 132.28
+## 297 2000-11-04      43.55S  43.55
+## 298 2003-06-25      43.51S  43.51
+## 299 2005-02-16      43.35S  43.35
+## 300 2012-01-27      43.24S  43.24
+## 301 2013-06-25       43.2S  43.20
+## 302 2019-04-21      43.17S  43.17
+## 303 1999-10-24   2M 17.67S 137.67
+## 304 2003-08-18   2M 14.16S 134.16
+## 305 2006-08-05   2M 13.59S 133.59
+## 306 2011-01-05   2M 13.27S 133.27
+## 307 2012-01-30   2M 13.18S 133.18
+## 308 2018-11-20   2M 11.72S 131.72
+## 309 2019-12-31   2M 11.62S 131.62
+## 310 1999-07-12      43.33S  43.33
+## 311 2000-12-09      43.18S  43.18
+## 312 2002-03-09      43.09S  43.09
+## 313 2003-08-18      42.99S  42.99
+## 314 2005-07-22      42.65S  42.65
+## 315 2006-08-06      42.64S  42.64
+## 316 2008-12-15       42.6S  42.60
+## 317 2013-12-29      42.41S  42.41
+## 318 2015-10-21      42.26S  42.26
+## 319 2018-09-15      42.07S  42.07
+## 320 1997-09-06       29.9S  29.90
+## 321 1999-04-28      26.26S  26.26
+## 322 2002-08-02      25.58S  25.58
+## 323 2005-07-29      25.16S  25.16
+## 324 2009-08-04      23.85S  23.85
+## 325 2012-07-02      22.62S  22.62
+## 326 2013-07-16      22.53S  22.53
+## 327 2020-02-25      21.35S  21.35
+## 328 1999-07-12      43.33S  43.33
+## 329 2000-12-09      43.18S  43.18
+## 330 2002-03-09      43.09S  43.09
+## 331 2003-08-18      42.99S  42.99
+## 332 2005-07-22      42.65S  42.65
+## 333 2006-08-06      42.64S  42.64
+## 334 2008-12-15       42.6S  42.60
+## 335 2013-12-29      42.41S  42.41
+## 336 2015-10-21      42.26S  42.26
+## 337 2018-09-15      42.07S  42.07
+## 338 2002-03-11   1M 44.35S 104.35
+## 339 2003-06-10    1M 43.5S 103.50
+## 340 2005-09-10   1M 43.08S 103.08
+## 341 2008-03-08   1M 42.94S 102.94
+## 342 2013-07-31    1M 42.9S 102.90
+## 343 2018-11-11   1M 42.24S 102.24
+## 344 2000-11-12      31.77S  31.77
+## 345 2003-07-29      31.71S  31.71
+## 346 2005-06-29      31.48S  31.48
+## 347 2013-09-16      31.37S  31.37
+## 348 2018-01-18      31.25S  31.25
+## 349 1997-08-19      35.51S  35.51
+## 350 1999-07-13      33.67S  33.67
+## 351 2000-03-23      33.67S  33.67
+## 352 2004-05-10      33.58S  33.58
+## 353 2010-11-27      33.39S  33.39
+## 354 2012-06-05      33.39S  33.39
+## 355 2013-07-31      33.39S  33.39
+## 356 2016-04-27      33.39S  33.39
+## 357 2000-11-12      31.77S  31.77
+## 358 2003-07-29      31.71S  31.71
+## 359 2005-06-29      31.48S  31.48
+## 360 2013-09-16      31.37S  31.37
+## 361 2018-01-18      31.25S  31.25
+## 362 1999-10-31    2M 6.23S 126.23
+## 363 2003-11-14    2M 5.54S 125.54
+## 364 2006-04-16    2M 5.36S 125.36
+## 365 2008-02-28    2M 5.31S 125.31
+## 366 2011-07-21    2M 4.99S 124.99
+## 367 2013-10-03    2M 4.49S 124.49
+## 368 2018-01-07    2M 4.25S 124.25
+## 369 1999-09-26      41.24S  41.24
+## 370 2002-02-27      41.21S  41.21
+## 371 2003-07-10      41.02S  41.02
+## 372 2008-02-28      40.98S  40.98
+## 373 2009-12-31      40.98S  40.98
+## 374 2012-01-03      40.87S  40.87
+## 375 2013-10-04      40.83S  40.83
+## 376 2017-07-03      40.81S  40.81
+## 377 1999-11-13   5M 58.45S 358.45
+## 378 2000-11-17   5M 57.09S 357.09
+## 379 2003-03-31   5M 56.24S 356.24
+## 380 2006-02-01   5M 54.33S 354.33
+## 381 2013-07-02    5M 53.8S 353.80
+## 382 2014-08-15   5M 53.56S 353.56
+## 383 2016-02-09   5M 52.75S 352.75
+## 384 2019-04-10   5M 51.96S 351.96
+## 385 1999-11-02   1M 58.26S 118.26
+## 386 2000-11-17   1M 58.25S 118.25
+## 387 2002-03-05   1M 57.81S 117.81
+## 388 2004-09-01   1M 57.79S 117.79
+## 389 2006-01-29   1M 57.39S 117.39
+## 390 2011-07-31   1M 57.27S 117.27
+## 391 2012-12-23   1M 57.01S 117.01
+## 392 2014-08-15   1M 56.95S 116.95
+## 393 2016-01-13   1M 56.65S 116.65
+## 394 2019-04-10   1M 56.52S 116.52
+## 395 1999-09-16   4M 21.96S 261.96
+## 396 2000-11-12   4M 20.47S 260.47
+## 397 2006-12-13   3M 57.97S 237.97
+## 398 2012-09-19   3M 56.61S 236.61
+## 399 2015-03-31   3M 56.36S 236.36
+## 400 2019-01-01   3M 54.87S 234.87
+## 401 1999-11-02   1M 58.26S 118.26
+## 402 2000-11-17   1M 58.25S 118.25
+## 403 2002-03-05   1M 57.81S 117.81
+## 404 2004-09-01   1M 57.79S 117.79
+## 405 2006-01-29   1M 57.39S 117.39
+## 406 2011-07-31   1M 57.27S 117.27
+## 407 2012-12-23   1M 57.01S 117.01
+## 408 2014-08-15   1M 56.95S 116.95
+## 409 2016-01-13   1M 56.65S 116.65
+## 410 2019-04-10   1M 56.52S 116.52</code></pre>
 </div>
 <div id="question-3" class="section level1">
 <h1>Question 3</h1>
