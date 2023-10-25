@@ -73,7 +73,7 @@ Let's get the year from the `date` column and save it as a variable named `year`
 
 ```{r}
 mk_q5 <- records %>% mutate(year = substr(date, 1, 4))
-mk_q5
+head(mk_q5)
 ```
 
 # Question 6
