@@ -107,7 +107,7 @@ Three Lap time reports the total time spent finishing three laps in total, as op
 
 ```{r}
 mk_q9 <- mk_q5 %>% mutate(time_per = ifelse(type=="Three Lap",time/3,time))
-mk_q9
+head(mk_q9)
 ```
 # Question 10
 There appears to be recent discoveries of shortcuts within some of the tracks causing a number of extraordinarily fast records set in `Three Lap` tracks (Have you noticed this in your graph in Question 9?). Replicate your histogram in Question 9 with `shortcut=="No"` filter.
