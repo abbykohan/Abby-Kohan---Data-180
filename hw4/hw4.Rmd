@@ -106,14 +106,14 @@ mk_q8
 Three Lap time reports the total time spent finishing three laps in total, as opposed to finishing a single lap. Let's divide all time observations with `type=="Three Lap"` by 3 to check whether **per lap** performance declines across Three Lap vs. Single Lap. Generate a new variable named `time_per` which is the time spent per round, and create two overlaid histograms of `type_per` by `type`. Hint: Use `mutate()`, and inside `mutate()` use `ifelse()` function to conditionally replace rows: e.g.., `ifelse(type=="Three Lap",time/3,time)` which divides `time` by three only if `type=="Three Lap"`.
 
 ```{r}
-mk_q9 <- mk_q5 %>% mutate(time_per = ifelse(type=="Three Lap",time/3,time))
-head(mk_q9)
+mk_q9 <- mk_q5 %>% mutate(time_per = ifelse(type=="Three Lap",time/3,time)) %>% ggplot(.,aes(fill=type, x=time_per)) + geom_histogram(alpha=0.5)
+mk_q9
 ```
 # Question 10
 There appears to be recent discoveries of shortcuts within some of the tracks causing a number of extraordinarily fast records set in `Three Lap` tracks (Have you noticed this in your graph in Question 9?). Replicate your histogram in Question 9 with `shortcut=="No"` filter.
 
 ```{r}
-mk_q10 <- mk_q9 %>%  ggplot(.,aes(fill=type, x=time_per)) + geom_histogram(alpha=0.5)
+mk_q10 <- records %>% filter(shortcut=="No") %>% mutate(time_per = ifelse(type=="Three Lap",time/3,time))  %>% ggplot(.,aes(fill=type, x=time_per)) + geom_histogram(alpha=0.5)
 mk_q10
 ```
 
