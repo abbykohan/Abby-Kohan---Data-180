@@ -20,6 +20,7 @@ First, load in dplyr. Make sure to install dplyr (or tidyverse in general) first
 For the entire assignment, make sure to use dplyr functions only. (no base R!)
 
 ```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
 library(dplyr)
 records <- read.csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-25/records.csv')
 head(records)
@@ -48,40 +49,47 @@ summary(records)
 Return the count of cases where a record was broken in more than a year (365 days).
 
 ```{r}
-mk_q1 <- select(filter(records, record_duration > 365), track, type, shortcut, player, system_played, date, time_period, time)
+mk_q1 <- (count(filter(records, record_duration > 365)))
 mk_q1
 ```
 # Question 3
 Return name of the player, name of the track, record date, and record duration for the record that took the longest time to be broken.
 
 ```{r}
-
+mk_q3 <- records %>% select(player, track, date, record_duration) %>% filter(record_duration == max(record_duration))
+mk_q3
+                                                                             
 ```
 
 # Question 4
 Return the mean record time (`time`) by each track. What is the name of the track with the fastest average record time? *Hint: you should use `group_by() and summarize()*
 
 ```{r}
-
+mk_q4 <- records %>% group_by(track) %>% summarize(mean_time = mean(time)) %>% arrange(mean_time)
+mk_q4
 ```
 # Question 5
 Let's get the year from the `date` column and save it as a variable named `year`. You can use the function `substr(date, 1, 4)` which grabs the first 4 digits in the `date` column. Use this expression in `mutate()` to create a `year` column. (Don't forget to save/overwrite the dataframe returned to the original one!)
 
 ```{r}
-
+mk_q5 <- records %>% mutate(year = substr(date, 1, 4))
+mk_q5
 ```
 
 # Question 6
 Now get the average record time (`time`) by year.
 
 ```{r}
-
+mk_6 <- mk_q5 %>% group_by(date) %>% summarize(mean_time = mean(time)) %>% arrange(mean_time)
+mk_6
 ```
 # Question 7
 Continuing with your results in Question 6: Do you notice a trend across years? Are the record times getting faster, slower, or no clear pattern in time? Create a barplot where each year appears on the x axis (you can treat year as a categorical variable in this case) and y axis showing the mean record time in each year. Interpret your graph. *Hint: Use your code in Question 6, which returns the average record times by year, followed by ` %>% ggplot(aes(year,mean)) + geom_bar(stat='identity')` Hint2: To make your figure wider, you can insert fig.width=10 inside the curly brackets at the beginning of your r code chunk below, as {r, fig.width=10} which I already did for you below,*
 
 ```{r, fig.width=10}
-
+#the times got faster as the years went on. The record times are getting faster.
+mk_7 <- mk_q5 %>% group_by(year) %>% summarize(mean_time = mean(time)) %>% arrange(mean_time) %>%  ggplot(aes(year,mean_time)) + geom_bar(stat = "identity")
+mk_7
 ```
 
 # Question 8
@@ -90,27 +98,32 @@ Create two overlaid histograms by `type` on the same plot where each histogram s
 Note: Set `alpha=.5` for transparency.
 
 ```{r}
-
+mk_q8 <- mk_q5 %>%  ggplot(.,aes(fill=type, x=time)) + geom_histogram(alpha=0.5)
+mk_q8
 ```
 
 # Question 9
 Three Lap time reports the total time spent finishing three laps in total, as opposed to finishing a single lap. Let's divide all time observations with `type=="Three Lap"` by 3 to check whether **per lap** performance declines across Three Lap vs. Single Lap. Generate a new variable named `time_per` which is the time spent per round, and create two overlaid histograms of `type_per` by `type`. Hint: Use `mutate()`, and inside `mutate()` use `ifelse()` function to conditionally replace rows: e.g.., `ifelse(type=="Three Lap",time/3,time)` which divides `time` by three only if `type=="Three Lap"`.
 
 ```{r}
-
+mk_q9 <- mk_q5 %>% mutate(time_per = ifelse(type=="Three Lap",time/3,time))
+mk_q9
 ```
 # Question 10
 There appears to be recent discoveries of shortcuts within some of the tracks causing a number of extraordinarily fast records set in `Three Lap` tracks (Have you noticed this in your graph in Question 9?). Replicate your histogram in Question 9 with `shortcut=="No"` filter.
 
 ```{r}
-
+mk_q10 <- mk_q9 %>%  ggplot(.,aes(fill=type, x=time_per)) + geom_histogram(alpha=0.5)
+mk_q10
 ```
 
 # Question 11
 Lastly, compare the mean `time` by `system_played`. Do you observe a difference across the two game systems? (Note: NTSC version of the game runs at 60 FPS (Frames Per Second), and PAL runs at 50 FPS!) Does this appear to affect performance of records set?
 
 ```{r}
-
+mk_q11 <- records %>% group_by(system_played) %>% summarize(mean_time = mean(time)) 
+mk_q11
+#the mean time for NTSC is significantly smaller than the mean time for PAL. The fact that NTSC runs at 60 FPS could very well have an affect on the mean time since the PAL system runs at a slower FPS and has longer mean times. 
 ```
 
 You are done! 🏁 Don't forget to commit and push your .Rmd file to your Github repository before the due date. (Well... the checkered flag emoji is now super relevant for this assignment!)
