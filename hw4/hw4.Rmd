@@ -8,7 +8,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document
 ---
-
+20/20. Good job. 
 **Due date:** October 26 beginning of class.
 
 Let's get some practice with **dplyr**! For this assignment, you will work with Mario Kart data! This data is made available as part of Tidy Tuesday. A codebook is available at https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-05-25.
@@ -88,6 +88,9 @@ Continuing with your results in Question 6: Do you notice a trend across years? 
 
 ```{r, fig.width=10}
 #the times got faster as the years went on. The record times are getting faster.
+
+# There is no trend. 
+
 mk_7 <- mk_q5 %>% group_by(year) %>% summarize(mean_time = mean(time)) %>% arrange(mean_time) %>%  ggplot(aes(year,mean_time)) + geom_bar(stat = "identity")
 mk_7
 ```
