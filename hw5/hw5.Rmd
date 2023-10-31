@@ -2,8 +2,8 @@
 title: "HW 5"
 subtitle: "Data 180, Professor Kennedy"
 author: 
-  name: "Your Name"
-  email: "XXXX@dickinson.edu"
+  name: "Abby Kohan"
+  email: "kohana@dickinson.edu"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document
@@ -20,10 +20,10 @@ print(X)
 ```
 
 a) Find the Euclidean distance between the first and second objects. Round the answer to have two decimal points. 
-
+6.40
 b) Find the Manhattan distance between the first and third objects. Round the answer to have two decimal points.
-
-c) Find the Minkowski distance ($\ro$ = 3) between the second and third objects. Round the answer to have two decimal points.  
+12
+c) Find the Minkowski distance ($\ro$ = 3) between the second and third objects. Round the answer to have two decimal points. 3.33
 
 # Question 2
 a) Use the filter and select commands to choose only vans from the `Cars93` data set. Select the variables (in this order) Model, Price, EngineSize, Horsepower, MPG.highway, and Length. Name this object `Vans93`. Note: Be sure to load the `dplyr` package after loading `MASS` to prevent masking of the select command. How many objects does `Vans93` have? Print the `Vans93` dataframe in your solutions. Note2: If you get any errors with `select()`, try using `dplyr::select()` to avoid conflicts in `dplyr` and `MASS` packages.
@@ -95,7 +95,7 @@ b) Perform two separate clustering analyses of the data using the `hclust` funct
 
 (i)	using the Euclidean metric with complete linkage. Note: Similar to Question 2, start by creating a distance matrix named `vertebrate_euclidean` which should not include any text column. Add row and column names to the matrix from the `vertebrate` dataframe. Then apply `dist()` once again before feeding the matrix into `hclust()` function.
 ```{r}
-Ver_Euclidean<-as.matrix(dist(vertebrate[,-1]))
+#Ver_Euclidean<-as.matrix(dist(vertebrate[,-1]))
 
 ```
 
