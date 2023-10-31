@@ -377,9 +377,9 @@ print(X)</code></pre>
 <li>Find the Euclidean distance between the first and second objects.
 Round the answer to have two decimal points. 6.40</li>
 <li>Find the Manhattan distance between the first and third objects.
-Round the answer to have two decimal points. 12</li>
+Round the answer to have two decimal points. 10</li>
 <li>Find the Minkowski distance (<span class="math inline">\(\ro\)</span> = 3) between the second and third
-objects. Round the answer to have two decimal points. 3.33</li>
+objects. Round the answer to have two decimal points. 2.22</li>
 </ol>
 </div>
 <div id="question-2" class="section level1">
@@ -409,6 +409,10 @@ library(dplyr)</code></pre>
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>Vans93 &lt;- Cars93 %&gt;% filter(Type==&quot;Van&quot;) %&gt;% dplyr::select(Model, Price, EngineSize, Horsepower, MPG.highway, Length)
+count(Vans93)</code></pre>
+<pre><code>##   n
+## 1 9</code></pre>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Use the <code>dist</code> and <code>as.matrix</code> functions to
 find the distance matrix for the vans set using the Euclidean metric.
@@ -431,10 +435,60 @@ decimal points). Paste the final version of the matrix
 <code>Vans_Euclidean</code> into your solutions. Which two Vans (give
 the models) have the shortest distance between them? Which two have the
 largest distance between them?</p>
+<pre class="r"><code>Dist_V &lt;- dist(Vans93[,-1])
+Vans_Euclidean &lt;-round(as.matrix(Dist_V), 2)
+colnames(Vans_Euclidean)&lt;-Vans93[,1]
+rownames(Vans_Euclidean)&lt;-Vans93[,1]
+Vans_Euclidean</code></pre>
+<pre><code>##            Lumina_APV Astro Caravan Aerostar   MPV Quest Silhouette Previa
+## Lumina_APV       0.00 17.04   28.37    25.53 19.45 22.66      16.32  33.90
+## Astro           17.04  0.00   29.97    27.14 11.83 15.13       6.53  28.68
+## Caravan         28.37 29.97    0.00     3.44 20.08 17.61      33.91  13.23
+## Aerostar        25.53 27.14    3.44     0.00 17.68 15.54      30.96  13.50
+## MPV             19.45 11.83   20.08    17.68  0.00  4.12      15.58  17.76
+## Quest           22.66 15.13   17.61    15.54  4.12  0.00      19.44  13.87
+## Silhouette      16.32  6.53   33.91    30.96 15.58 19.44       0.00  32.96
+## Previa          33.90 28.68   13.23    13.50 17.76 13.87      32.96   0.00
+## Eurovan         61.80 56.56   35.12    37.66 46.20 42.16      61.45  29.17
+##            Eurovan
+## Lumina_APV   61.80
+## Astro        56.56
+## Caravan      35.12
+## Aerostar     37.66
+## MPV          46.20
+## Quest        42.16
+## Silhouette   61.45
+## Previa       29.17
+## Eurovan       0.00</code></pre>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Repeat the steps in part (b) but use the Manhattan metric and call
 the object <code>Vans_Manhattan</code>.</li>
 </ol>
+<pre class="r"><code>Dist_M &lt;- dist(Vans93[,-1], method=&quot;manhattan&quot;)
+Vans_Manhattan &lt;-round(as.matrix(Dist_M), 2)
+colnames(Vans_Manhattan)&lt;-Vans93[,1]
+rownames(Vans_Manhattan)&lt;-Vans93[,1]
+Vans_Manhattan</code></pre>
+<pre><code>##            Lumina_APV Astro Caravan Aerostar  MPV Quest Silhouette Previa
+## Lumina_APV        0.0  24.8    36.5     34.4 31.6  34.6       19.2   49.8
+## Astro            24.8   0.0    46.7     42.6 21.8  24.8       11.4   44.0
+## Caravan          36.5  46.7     0.0      5.9 31.1  26.1       50.3   21.3
+## Aerostar         34.4  42.6     5.9      0.0 28.8  23.8       47.2   23.4
+## MPV              31.6  21.8    31.1     28.8  0.0   5.0       21.2   26.2
+## Quest            34.6  24.8    26.1     23.8  5.0   0.0       24.2   21.2
+## Silhouette       19.2  11.4    50.3     47.2 21.2  24.2        0.0   44.6
+## Previa           49.8  44.0    21.3     23.4 26.2  21.2       44.6    0.0
+## Eurovan          76.7  68.9    46.2     48.7 53.1  48.1       71.5   33.1
+##            Eurovan
+## Lumina_APV    76.7
+## Astro         68.9
+## Caravan       46.2
+## Aerostar      48.7
+## MPV           53.1
+## Quest         48.1
+## Silhouette    71.5
+## Previa        33.1
+## Eurovan        0.0</code></pre>
 <p>The vans with the shortest distance between them are the Quest and
 the MPV (5.0). The vans with the largest distance between them are the
 Lumina APV and the Eurovan (76.7).</p>
@@ -455,15 +509,12 @@ print(D)</code></pre>
 <p>Find (by hand) the inter-group distance between A = <span class="math inline">\(\{O_1, O_4\}\)</span> and B = <span class="math inline">\(\{O_2, O_3, O_5\}\)</span> (where <span class="math inline">\(O_n\)</span> denotes the <span class="math inline">\(n\)</span>th object in the distance matrix
 <strong>D</strong>) using</p>
 <ol style="list-style-type: lower-alpha">
-<li><p>Nearest-neighbor</p></li>
-<li><p>Farthest-neighbor</p></li>
-<li><p>Average-neighbor</p></li>
+<li><p>Nearest-neighbor 1</p></li>
+<li><p>Farthest-neighbor 9</p></li>
+<li><p>Average-neighbor 4.1 # Question 4 Consider the following
+dendrogram created by a hierarchical clustering of 11 frequently used
+English words.</p></li>
 </ol>
-</div>
-<div id="question-4" class="section level1">
-<h1>Question 4</h1>
-<p>Consider the following dendrogram created by a hierarchical
-clustering of 11 frequently used English words.</p>
 <div class="float">
 <img src="hw5-image.png" alt="Caption: 11 frequently used English words" />
 <div class="figcaption">Caption: 11 frequently used English words</div>

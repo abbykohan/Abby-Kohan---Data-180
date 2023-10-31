@@ -22,8 +22,9 @@ print(X)
 a) Find the Euclidean distance between the first and second objects. Round the answer to have two decimal points. 
 6.40
 b) Find the Manhattan distance between the first and third objects. Round the answer to have two decimal points.
-12
-c) Find the Minkowski distance ($\ro$ = 3) between the second and third objects. Round the answer to have two decimal points. 3.33
+10
+c) Find the Minkowski distance ($\ro$ = 3) between the second and third objects. Round the answer to have two decimal points. 
+2.22
 
 # Question 2
 a) Use the filter and select commands to choose only vans from the `Cars93` data set. Select the variables (in this order) Model, Price, EngineSize, Horsepower, MPG.highway, and Length. Name this object `Vans93`. Note: Be sure to load the `dplyr` package after loading `MASS` to prevent masking of the select command. How many objects does `Vans93` have? Print the `Vans93` dataframe in your solutions. Note2: If you get any errors with `select()`, try using `dplyr::select()` to avoid conflicts in `dplyr` and `MASS` packages.
@@ -31,6 +32,8 @@ a) Use the filter and select commands to choose only vans from the `Cars93` data
 library(MASS)
 library(dplyr)
 
+Vans93 <- Cars93 %>% filter(Type=="Van") %>% dplyr::select(Model, Price, EngineSize, Horsepower, MPG.highway, Length)
+count(Vans93)
 
 
 ```
@@ -44,14 +47,22 @@ rownames(Vans_Euclidean)<-Vans93[,1]
 
 Finally, round the values in this matrix to the hundredths place (two decimal points). Paste the final version of the matrix `Vans_Euclidean` into your solutions. Which two Vans (give the models) have the shortest distance between them? Which two have the largest distance between them?
 ```{r}
-
+Dist_V <- dist(Vans93[,-1])
+Vans_Euclidean <-round(as.matrix(Dist_V), 2)
+colnames(Vans_Euclidean)<-Vans93[,1]
+rownames(Vans_Euclidean)<-Vans93[,1]
+Vans_Euclidean
 ```
 
 
 
 c) Repeat the steps in part (b) but use the Manhattan metric and call the object `Vans_Manhattan`.
 ```{r}
-
+Dist_M <- dist(Vans93[,-1], method="manhattan")
+Vans_Manhattan <-round(as.matrix(Dist_M), 2)
+colnames(Vans_Manhattan)<-Vans93[,1]
+rownames(Vans_Manhattan)<-Vans93[,1]
+Vans_Manhattan
 ```
 
 The vans with the shortest distance between them are the Quest and the MPV (5.0). The vans with the largest distance between them are the Lumina APV and the Eurovan (76.7).
@@ -66,14 +77,13 @@ print(D)
 Find (by hand) the inter-group distance between A = $\{O_1, O_4\}$ and B = $\{O_2, O_3, O_5\}$ (where $O_n$ denotes the $n$th object in the distance matrix **D**) using
 
 a) Nearest-neighbor
-
-
+1
 
 b) Farthest-neighbor
-
+9
 
 c) Average-neighbor
-
+4.1
 # Question 4
 Consider the following dendrogram created by a hierarchical clustering of 11 frequently used English words.
 
