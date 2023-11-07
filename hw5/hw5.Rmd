@@ -8,6 +8,7 @@ date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output: 
   html_document
 ---
+17/20.
 
 **Due date:** November 2 beginning of class.
 
@@ -49,6 +50,8 @@ rownames(Vans_Euclidean)<-Vans93[,1]
 ```
 
 Finally, round the values in this matrix to the hundredths place (two decimal points). Paste the final version of the matrix `Vans_Euclidean` into your solutions. Which two Vans (give the models) have the shortest distance between them? Which two have the largest distance between them?
+
+# Which two Vans (give the models) have the shortest distance between them? Which two have the largest distance between them? (-2)
 ```{r}
 Dist_V <- dist(Vans93[,-1])
 Vans_Euclidean <-round(as.matrix(Dist_V), 2)
@@ -87,6 +90,8 @@ b) Farthest-neighbor
 
 c) Average-neighbor
 4.1
+
+# How do you arrive at these numbers ?  (-1)
 # Question 4
 Consider the following dendrogram created by a hierarchical clustering of 11 frequently used English words.
 
