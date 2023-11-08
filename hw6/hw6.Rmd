@@ -106,7 +106,14 @@ plot_grid(graph1, graph2, graph3, graph4, graph5, labels = "AUTO")
 Create a plot showing how WGSS changes for K = 1 to 8 groups. For each K choice, cluster the mammals based on their standardized milk composition and set the nstart argument to run at 50 at each iteration. Compute and record WGSS. After the loop is done, show the plot of WGSS by number of clusters in your solutions. How many clusters does the elbow plot suggest? How does this compare to your impression from the dendrogram in Question 2?
 
 ```{r}
+WGSS <- rep(0,8)
+  for (i in 1:8){
+    WGSS[i] <- kmeans(Mammals_Milk_Std, centers=i, nstart=50)$tot.withinss
+  }
+ggplot(as.data.frame(WGSS), aes(x=1:8, y=WGSS)) + geom_point(size=2) + geom_line(linetype="dashed")
 
+#The plot suggests there are about 3-4 clusters because the line bends at around x=3 and x=4
+#This is accurate to the dendrogram because there appear to be around 3 main clusters which is similar to the elbow plot.
 ```
 
 
