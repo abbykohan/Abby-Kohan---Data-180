@@ -31,16 +31,16 @@ In this homework, we will analyze news headlines data scraped from abcnews, post
 Read the `news.csv` into R and create the object `news` using
 
 ```{r}
-#library(tidyverse)
+library(tidyverse)
 library(tm)
-news<-read.csv("news.csv", header=T)
+news<-read.csv("~/Desktop/Abby Kohan - Data 180/Abby-Kohan---Data-180/hw7/news.csv", header=T)
 ```
 
 Read also the positive and negative word dictionaries, both found on Github. This will later come in handy:
 
 ```{r}
-posWords <- scan("positive-words.txt", character(0), sep = "\n")  # 2006 items
-negWords <- scan("negative-words.txt", character(0), sep = "\n")  # 4783 items
+posWords <- scan("~/Desktop/Abby Kohan - Data 180/Abby-Kohan---Data-180/hw7/positive-words.txt", character(0), sep = "\n")  # 2006 items
+negWords <- scan("~/Desktop/Abby Kohan - Data 180/Abby-Kohan---Data-180/hw7/negative-words.txt", character(0), sep = "\n")  # 4783 items
 head(posWords,15)
 head(negWords,15)
 ```
@@ -49,19 +49,21 @@ head(negWords,15)
 # Question 1
 First, check how many years of news data we have loaded in in R.
 ```{r}
-
+#18 years
 ```
 
 # Question 2
 Store the headlines column in a vector of text named `charVector`. Print the first 6 entries in the vector.
 ```{r}
-
+charVector <- news$headline_text
+head(charVector)
 ```
 
 # Question 3
 Convert `charVector` into a vector source object named `wordVector` using the function `VectorSource()`. (See class notes on how to do this) Then convert `wordVector` into a corpus object named `wordCorpus` using the function `Corpus()`.
 ```{r}
-
+wordVector <- VectorSource(charVector)
+wordCorpus <- Corpus(wordVector)
 ```
 
 # Question 4
@@ -72,26 +74,37 @@ We are now ready to do some basic trimming on the text. Do the following on the 
 * Remove stopwords (e.g., the, a, at, etc.)
 
 ```{r}
+wordCorpus <- tm_map(wordCorpus, content_transformer(tolower))
+wordCorpus <- tm_map(wordCorpus, removePunctuation)
+wordCorpus <- tm_map(wordCorpus, removeNumbers)
+wordCorpus <- tm_map(wordCorpus, removeWords, stopwords("english"))
+
+
+
 
 ```
 
 # Question 5
 What is a term document matrix? Explain. Create a term document matrix from the news vector and store it as an object named `tdm` using the function `TermDocumentMatrix`.
 ```{r}
-
+# Each row stands for a term and each column for a document, and an entry is the number of occurrences of the term in the document.
+tdm <- TermDocumentMatrix(wordCorpus)
+tdm
 ```
 
 # Question 6
 Convert `tdm` into a matrix named `m`. Store the frequency of occurrence of each word in the news headlines in an object named `wordCounts`. Return the top 10 most frequent words. (Note: if you run into memory issues creating the matrix `m`, try using one of the computers in Tome.)
 ```{r}
-
+m <- as.matrix(tdm)
+wordCounts <- rowSums(m)
+head(sort(wordCounts, decreasing=TRUE), 10)
 ```
 
 # Question 7
 Create a barplot of the words that showed up at least 50 times in the news headlines. Rotate the x axis labels by 90 degrees, and decrease the label font size by 25%.
 
 ```{r}
-
+barplot(wordCounts[wordCounts >50], las=2, cex.names=.75)
 ```
 
 
@@ -99,6 +112,21 @@ Create a barplot of the words that showed up at least 50 times in the news headl
 What is the percentage of positive words in the news headlines? What is the percentage of negative words? Make a barplot for each (for positive and negative words that showed up separately) showing the most frequent words for words that showed up at least 20 times. (Note: don't forget to get the total number of unique words that showed up in the data.)
 
 ```{r}
+totalWords <- sum(wordCounts)
+matched_p <- match(names(wordCounts), posWords, nomatch=0)
+matched_n <- match(names(wordCounts), negWords, nomatch=0)
+
+matched_p <- matched_p != 0
+matched_n <- matched_n != 0
+
+matched_p <- wordCounts[matched_p]
+matched_n <- wordCounts[matched_n]
+
+barplot(matched_p[matched_p >20], las=2, cex.names=.75)
+barplot(matched_n[matched_n >20], las=2, cex.names=.75)
+
+sum(matched_p)/totalWords
+sum(matched_n)/totalWords
 
 ```
 
@@ -112,13 +140,15 @@ news <- news %>% group_by(year,month) %>% mutate(count=n(), yearmonth = paste(ye
 Using `ggplot2`, create a barplot for the frequency of articles released in each year and month. On the x axis, you should have year month, e.g., 2003/10, 2003/11, 2003/12, 2004/1, on the y-axis you should have the number of articles released in the data. Do you see a change in the number of articles released across years? (Hint: use `factor()` with `levels=` options specified when you call `aes(x=)` to have a proper chronological sorting on your x axis. Use `+theme(axis.text=element_text(size=4,angle=90)` to fit the dates on the x axis.)
 
 ```{r}
+ggplot(news, aes(x=factor(yearmonth, levels=unique(yearmonth)))) + geom_bar() + theme(axis.text=element_text(size=4,angle=90))
 ```
 
 Let's now practice working with `quanteda` and `corpus` packages. Install the packages first if you don't have them in your computer and load them in in R.
 
 ```{r}
 library("quanteda")
-library('corpus')
+#library('corpus')
+#install.packages('corpus')
 ```
 
 # Question 10
@@ -128,7 +158,7 @@ Using the `term_stats()` function, return the 20 most frequent single words that
 * stopwords
 
 ```{r}
-
+#term_stats(charVector, ngrams=1, filter=text_filter(drop_punc=TRUE, drop_symbol=TRUE, drop=stopwords_en))
 ```
 
 # Question 11
