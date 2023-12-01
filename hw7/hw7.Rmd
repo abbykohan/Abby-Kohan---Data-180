@@ -50,6 +50,7 @@ head(negWords,15)
 First, check how many years of news data we have loaded in in R.
 ```{r}
 #18 years
+#2021-2003 -> 18
 ```
 
 # Question 2
@@ -148,7 +149,7 @@ Let's now practice working with `quanteda` and `corpus` packages. Install the pa
 ```{r}
 library("quanteda")
 #library('corpus')
-#install.packages('corpus')
+
 ```
 
 # Question 10
@@ -158,29 +159,39 @@ Using the `term_stats()` function, return the 20 most frequent single words that
 * stopwords
 
 ```{r}
-#term_stats(charVector, ngrams=1, filter=text_filter(drop_punc=TRUE, drop_symbol=TRUE, drop=stopwords_en))
+head(termFreq(charVector, control = list(removePunctuation=TRUE, stopwords=FALSE)), 20) 
 ```
 
 # Question 11
 Repeat the previous question for word pairs (frequency of 2 words that show up, instead of 1 word)
 ```{r}
+head(termFreq(charVector, control = list(removePunctuation=TRUE, stopwords=FALSE)), 20)
 ```
 
 # Question 12
 Create a corpus object using `corpus()` function. Store it in an object named `newscorpus`. Convert `newscorpus` into paragraphs with `corpus_reshape()`.
 ```{r}
+newscorpus <- corpus(charVector)
+newscorpus <- corpus_reshape(newscorpus, to="paragraphs")
+newscorpus
 ```
 
 # Question 13
 Create a term document matrix named `news_dtm` by using the `dfm()` function. While you call `dfm()`, make sure to clean the paragraphs by keeping only the stems of the words, removing punctuations, removing symbols, removing numbers, and removing stopwords. If you wish to get rid of anything that does not look correct in the data (such as weird bunch of characters that show up as "words") you may trim them out at this stage using `dfm_remove()`. Finally, trim `news_dtm` such that it contains only words that show up at least 50 times. Print the first 6 rows of `news_dtm`. (Note: Again, ignore warnings.)
 ```{r}
+news_dtm <- dfm(newscorpus, stem=TRUE, remove_punct=TRUE, remove_symbols = TRUE, remove_numbers = TRUE, remove=c(stopwords("english")))
+news_dtm <- dfm_trim(news_dtm, min_termfreq=50)
+head(news_dtm)
+
 ```
 
 # Question 14
 Create a wordcloud of `news_dtm` using `textplot_wordcloud()`. Comment on words that you were surprised and not surprised to see in the news headlines dataset.
 ```{r}
 library("quanteda.textplots")
-
+textplot_wordcloud(news_dtm,adjust=0.5)
+#I am NOT surprised to see "police", "news", "court", "health", "interview", "gov", and "public", because these are normal words I would expect to see in a news article.
+#I am surprised to see "man", because I didn't expect it to be such a difference between news about men and women, "fire" because I wouldn't expect fires to be THAT common to be one of the top words, "warn", and "price", I feel are less common words.
 ```
 
 
@@ -195,6 +206,10 @@ library('tidytext')
 Run the LDA algorithm using k = 8. Store your output in object named `topic_model`. Print the 10 most frequent words that occurred in each 8 topic.
 
 ```{r}
+topic_model <- convert(news_dtm, to = "topicmodels") 
+
+topic_model <- LDA(topic_model, method = "VEM", k=8)
+terms(topic_model,10)
 
 ```
 
@@ -202,13 +217,47 @@ Run the LDA algorithm using k = 8. Store your output in object named `topic_mode
 # Question 15
 Plot betas of top 10 words with highest beta for each 8 topic. Comment on 3-4 news headline groups in terms of their topic content.
 ```{r}
+beta_topics <- tidy(topic_model, matrix = "beta")
+#install.packages("reshape2")
 
+beta_top_topics <- beta_topics %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 10) %>% ungroup() %>% arrange(topic, -beta)
+
+beta_top_topics %>%
+  mutate(term = reorder_within(term, beta, topic)) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~topic, scales = "free") + 
+  scale_y_reordered()
+
+#The 4th topic seems to be about a murder or murder case because the main words are "court", "charge", "accuse", and "murder".
+#The 7th topic seems to be about a fire because some of the words with large betas are "fire", "kill", "water, and "nation".
+#The 3rd topic may be about a new Australian policy with the main words being "policy, "Australian", "plan", "new", "mine".
 ```
 
 # Question 16
 Plot gammas of top 5 documents with highest gamma for each 8 topic. Return the contents of the 5 documents with highest gamma only for topics 1 and 2. Does it makes sense that these documents are assigned to topics 1 and 2 accordingly? Comment.
 ```{r}
+gamma_topics <- tidy(topic_model, matrix = "gamma")
+gamma_topics
 
+gamma_topics <- gamma_topics %>%
+  group_by(topic) %>%
+  slice_max(gamma, n = 5) %>% 
+  ungroup() %>%
+  arrange(document, -gamma)
+
+gamma_topics %>%
+  mutate(document = reorder_within(document, gamma, topic)) %>%
+  ggplot(aes(gamma, document, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~topic, scales = "free") +
+  scale_y_reordered() 
+
+gamma_topics %>% filter(document=='text7216'|document=='text6638'|document=='text639'|document=='text9558'|document=='text9135'|document=='text3405'|document=='text9665'|document=='text3329'|document=='text9820'|document=='text192')
+
+#Yes it makes sense that these documents are assigned to topics 1 and 2 accordingly because they have a large gamma.
 ```
 
 
