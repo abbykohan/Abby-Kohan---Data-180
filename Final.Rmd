@@ -96,28 +96,31 @@ hist(loan_data$credit_age, main="Age in months of first credit product obtained 
 ```
 (d) How would your convert the “rep_education” column into numerical data? Name two ways.  
 ```{r}
-
+#?? idk
 
 ```
 
 Question #3
 (a) Plot a bar graph for the “Def_Ind” column and describe it.  
 ```{r}
-
+barplot(loan_data$Def_ind, main="Indicator of Default Bar Graph", xlab="", ylab="", col="lightyellow", border="black")
 
 ```
 (b) Plot a bar graph for the “rep_education" column and describe it.  
 ```{r}
-
+barplot(table(loan_data$rep_education), main="Education Level", xlab="", ylab="", col="lightyellow", border="black")
+#There is a large amount of people with college level education and the next highest is high school. There is a small number of people with graduate level education and a very small amount with "other"
 
 ```
 (c) Plot a histogram of the “rep_income” variable. 
 ```{r}
-
+hist(loan_data$rep_income, main="Annual Income", xlab="", ylab="", col="grey", border="black")
 
 ```
 (d) Plot a boxplot of the “tot_balance” variable. Using the box plot report the five number summary of the variable? Are there any outliers for this variable?  
 ```{r}
-
+boxplot(loan_data$tot_balance, main="Total Available Balance", xlab="", ylab="", col="aquamarine", border="black")
 
 ```
+
+Finished!
