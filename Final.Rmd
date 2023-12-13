@@ -30,7 +30,7 @@ column_names
 ```
 (c) Which types of data are there in the dataset? Numeric, categorical, ordinal? 
 ```{r}
-#Numerical
+#There are a three types of data in this data set. def_ind and ind_XYZ are oridnal data, they give a binary # (0 or 1) as an indication of that columns purpose. re_education is categorical data because it is measured with a name (school level) as opposed to a mathematical value. All other columns in the data set are numerical.
 
 ```
 (d) Which columns contain missing values and how much (what percent) of those columns are missing? 
@@ -41,7 +41,7 @@ missing_col
 
 perc_miss <- (missing_col/nrow(loan_data)) * 100
 perc_miss
-# 7.795% of rep_income is missing AND 9.970% of pct_card_over_50_uti is missing
+# 7.795% of rep_income is missing AND 9.790% of pct_card_over_50_uti is missing
 ```
 (e) How do you think we should deal with missing values? There are pros and cons, can drop rows with missing values, there is no best way. List as many ways as you can (about 5). 
 ```{r}
@@ -55,13 +55,13 @@ perc_miss
 ```
 (f) With this data, would you fit a supervised or an unsupervised learning model? Why?  
 ```{r}
-#Supervised?
+#I would fit a supervised learning model because the data is labeled and the goal is to predict or classify future observations.
 
 ```
 (g) For part 2 and 3 drop all rows of the data that contain missing values. Print the dimensions of the resulting data set that has no missing values. 
 ```{r}
 new_loan_data <- na.omit(loan_data)
-new_loan_data
+head(new_loan_data)
 
 no_missing <- dim(new_loan_data)
 no_missing
@@ -85,42 +85,50 @@ summary_stats
 ```
 (c) Plot a histogram of the variables in b above. Do the shapes of the histograms confirm the skewness you found in b? 
 ```{r}
-hist(loan_data$num_card_inq_24_month, main="Number of credit card inquiries in the past 24 months", xlab="values", ylab="Frequency", col="lightblue", border="black")
+hist(loan_data$num_card_inq_24_month, main="Number of credit card inquiries in the past 24 months", xlab="# of inquiries", ylab="Frequency", col="lightblue", border="black")
 
-hist(loan_data$tot_amount_currently_past_due, main="Total amount past due currently for all credit cards", xlab="values", ylab="Frequency", col="orange", border="black")
+hist(loan_data$tot_amount_currently_past_due, main="Total amount past due currently for all credit cards", xlab="total amount past due", ylab="Frequency", col="orange", border="black")
 
-hist(loan_data$credit_age, main="Age in months of first credit product obtained by the applicant", xlab="values", ylab="Frequancy", col="pink", border="black")
+hist(loan_data$credit_age, main="Age in months of first credit product obtained by the applicant", xlab="# of months", ylab="Frequancy", col="pink", border="black")
 
 #Yes these confirm the skewness that I found in part b.
 
 ```
 (d) How would your convert the “rep_education” column into numerical data? Name two ways.  
 ```{r}
-#?? idk
+#1) You could assign a unique numerical label to each category in the column. The factor "function"  can be used to do this, as well as "as.numeric". This creates a new column and  assigns a numerical label to each unique category in the "rep_education" column.
+#2) You could create binary columns for each category which represents the presence or absence of a category with a 1 or 0. The model.matrix function can be used for this. This called encoding.
 
 ```
 
 Question #3
 (a) Plot a bar graph for the “Def_Ind” column and describe it.  
 ```{r}
-barplot(loan_data$Def_ind, main="Indicator of Default Bar Graph", xlab="", ylab="", col="lightyellow", border="black")
+library(ggplot2)
 
+def_ind_col <- loan_data$Def_ind
+
+ggplot(loan_data, aes(x = factor(def_ind_col))) + geom_bar(fill = "yellow") + labs(title = "Bar Graph for Indicator of Default", x="Def_Ind", y="Frequency")
+#right skewed
+#mode 0 mean 0.1, median 0
 ```
 (b) Plot a bar graph for the “rep_education" column and describe it.  
 ```{r}
-barplot(table(loan_data$rep_education), main="Education Level", xlab="", ylab="", col="lightyellow", border="black")
+barplot(table(loan_data$rep_education), main="Education Level", xlab="Education", ylab="Number of People", col="lightyellow")
 #There is a large amount of people with college level education and the next highest is high school. There is a small number of people with graduate level education and a very small amount with "other"
+#Rigth skewed
 
 ```
 (c) Plot a histogram of the “rep_income” variable. 
 ```{r}
-hist(loan_data$rep_income, main="Annual Income", xlab="", ylab="", col="grey", border="black")
+hist(loan_data$rep_income, main="Annual Income", xlab="Income in $", ylab="Frequency", col="grey", border="black")
 
 ```
 (d) Plot a boxplot of the “tot_balance” variable. Using the box plot report the five number summary of the variable? Are there any outliers for this variable?  
 ```{r}
-boxplot(loan_data$tot_balance, main="Total Available Balance", xlab="", ylab="", col="aquamarine", border="black")
-
+boxplot(loan_data$tot_balance, main="Total Available Balance Box Plot", ylab="Available Balace in $", col="aquamarine", border="black")
+tot_balance_sum <- summary(loan_data$tot_balance)
+tot_balance_sum 
 ```
 
 Finished!
