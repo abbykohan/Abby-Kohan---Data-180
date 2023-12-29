@@ -1,0 +1,136 @@
+---
+title: "Final_Exam"
+author: "Abby Kohan"
+date: "2023-12-07"
+output: html_document
+---
+39/40
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+Question #1 
+
+(a) What is the dimension (shape) of the dataset?  How many rows and columns does the data set have? 
+```{r}
+loan_data<-read.csv("loan_default_data_set (3).csv", header=T)
+#20,000 rows (observations)
+#21 columns (variables)
+```
+(b) Report the column names of the data set. 
+```{r}
+column_names <- colnames(loan_data)
+column_names
+```
+(c) Which types of data are there in the dataset? Numeric, categorical, ordinal? 
+```{r}
+#There are a three types of data in this data set. def_ind and ind_XYZ are oridnal data, they give a binary # (0 or 1) as an indication of that columns purpose. re_education is categorical data because it is measured with a name (school level) as opposed to a mathematical value. All other columns in the data set are numerical.
+
+```
+(d) Which columns contain missing values and how much (what percent) of those columns are missing? 
+```{r}
+missing_col <- colSums(is.na(loan_data))
+missing_col
+#rep_income and pct_card_over_50_uti are missing values
+
+perc_miss <- (missing_col/nrow(loan_data)) * 100
+perc_miss
+# 7.795% of rep_income is missing AND 9.790% of pct_card_over_50_uti is missing
+```
+(e) How do you think we should deal with missing values? There are pros and cons, can drop rows with missing values, there is no best way. List as many ways as you can (about 5). 
+```{r}
+#1: Drop rows or columns with missing values -> (quick and easy but can skew data if the dropped set is important)
+#2: Imputation -> (replacing missing values with a statistical value like a mean or median, can be useful is data is missing at random but could introduce bias)
+#3:Interpolation -> (can use statistical methods to estimate missing values based on the values of other variables, provides a polished imputation based on the relationship between variables but assumes a certain correlations between variables)
+#4:Model-Based Imputation -> (Use predictive models such as k-nearest neighbors to predict missing values, is fairly accurate but requires for time and resources and assumes correlation between variables)
+#5:Subset Data -> (can subset our data to obtain complete observations, can be quick bur can exclude important data)
+
+
+```
+(f) With this data, would you fit a supervised or an unsupervised learning model? Why?  
+```{r}
+#I would fit a supervised learning model because the data is labeled and the goal is to predict or classify future observations.
+
+```
+(g) For part 2 and 3 drop all rows of the data that contain missing values. Print the dimensions of the resulting data set that has no missing values. 
+```{r}
+new_loan_data <- na.omit(loan_data)
+head(new_loan_data)
+
+no_missing <- dim(new_loan_data)
+no_missing
+#16653 rows, 21 columns
+```
+
+
+Question #2
+
+(a) Find the summary statistics of the data set. You can use the summary function from dplyr.  
+```{r}
+library(dplyr)
+summary_stats <- summary(loan_data)
+summary_stats
+```
+(b) Based on the mean, mode, and median, is “num_card_inq_24_month” bell shaped, left, right skewed? How about “tot_amount_currently_past_due”? “credit_age”?  
+```{r}
+#num_card_inq_24_month -> mean:1.044 > median:0.000, therefore right-skewed
+#tot_amount_currently_past_due -> mean:354.2 > median:0.0, therefore right-skewed
+#credit_age -> mean:280.9 < median:281.0, graph will look bell shaped because mean and median are very close but technically right skewed because median is slightly larger than the mean
+```
+(c) Plot a histogram of the variables in b above. Do the shapes of the histograms confirm the skewness you found in b? 
+```{r}
+hist(loan_data$num_card_inq_24_month, main="Number of credit card inquiries in the past 24 months", xlab="# of inquiries", ylab="Frequency", col="lightblue", border="black")
+
+hist(loan_data$tot_amount_currently_past_due, main="Total amount past due currently for all credit cards", xlab="total amount past due", ylab="Frequency", col="orange", border="black")
+
+hist(loan_data$credit_age, main="Age in months of first credit product obtained by the applicant", xlab="# of months", ylab="Frequancy", col="pink", border="black")
+
+#Yes these confirm the skewness that I found in part b.
+
+```
+(d) How would your convert the “rep_education” column into numerical data? Name two ways.  
+```{r}
+#1) You could assign a unique numerical label to each category in the column. The factor "function"  can be used to do this, as well as "as.numeric". This creates a new column and  assigns a numerical label to each unique category in the "rep_education" column.
+#2) You could create binary columns for each category which represents the presence or absence of a category with a 1 or 0. The model.matrix function can be used for this. This called encoding.
+
+```
+
+Question #3
+(a) Plot a bar graph for the “Def_Ind” column and describe it.  
+```{r}
+library(ggplot2)
+
+def_ind_col <- loan_data$Def_ind
+
+ggplot(loan_data, aes(x = factor(def_ind_col))) + geom_bar(fill = "yellow") + labs(title = "Bar Graph for Indicator of Default", x="Def_Ind", y="Frequency")
+#right skewed
+#mode 0 mean 0.1, median 0
+```
+(b) Plot a bar graph for the “rep_education" column and describe it.  
+```{r}
+barplot(table(loan_data$rep_education), main="Education Level", xlab="Education", ylab="Number of People", col="lightyellow")
+#There is a large amount of people with college level education and the next highest is high school. There is a small number of people with graduate level education and a very small amount with "other"
+#Rigth skewed
+
+```
+(c) Plot a histogram of the “rep_income” variable. 
+```{r}
+hist(loan_data$rep_income, main="Annual Income", xlab="Income in $", ylab="Frequency", col="grey", border="black")
+
+```
+(d) Plot a boxplot of the “tot_balance” variable. Using the box plot report the five number summary of the variable? Are there any outliers for this variable?  
+```{r}
+boxplot(loan_data$tot_balance, main="Total Available Balance Box Plot", ylab="Available Balace in $", col="aquamarine", border="black")
+tot_balance_sum <- summary(loan_data$tot_balance)
+tot_balance_sum 
+
+# Are there any outliers for this variable?  (-1)
+```
+
+Finished!
