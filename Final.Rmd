@@ -4,7 +4,7 @@ author: "Abby Kohan"
 date: "2023-12-07"
 output: html_document
 ---
-
+39/40
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -19,7 +19,7 @@ Question #1
 
 (a) What is the dimension (shape) of the dataset?  How many rows and columns does the data set have? 
 ```{r}
-loan_data<-read.csv("~/Desktop/Abby Kohan - Data 180/Abby-Kohan---Data 180/loan_default_data_set (3).csv", header=T)
+loan_data<-read.csv("loan_default_data_set (3).csv", header=T)
 #20,000 rows (observations)
 #21 columns (variables)
 ```
@@ -129,6 +129,8 @@ hist(loan_data$rep_income, main="Annual Income", xlab="Income in $", ylab="Frequ
 boxplot(loan_data$tot_balance, main="Total Available Balance Box Plot", ylab="Available Balace in $", col="aquamarine", border="black")
 tot_balance_sum <- summary(loan_data$tot_balance)
 tot_balance_sum 
+
+# Are there any outliers for this variable?  (-1)
 ```
 
 Finished!
